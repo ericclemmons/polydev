@@ -8,7 +8,7 @@ import findAvailablePort from "./findAvailablePort"
 const server = new Server()
 const cwd = process.cwd()
 const { NODE_ENV = "development", PORT = 3000 } = process.env
-
+const lambdaPath = path.join(__dirname, "./lambda.js")
 const processes = new Map()
 
 server.on("request", async (req, res) => {
@@ -24,14 +24,12 @@ server.on("request", async (req, res) => {
     processes.delete(handler)
   }
 
-  const child = fork(handler, [], {
+  const child = fork(lambdaPath, [handler], {
     cwd,
-    env,
-    execArgv: []
+    env
   })
 
   // TODO Wait for `env.PORT` to become available?
-
   processes.set(handler, child)
 
   const event = {
