@@ -1,5 +1,6 @@
 import { fork } from "child_process"
 import { Server } from "http"
+import opn from "opn"
 import path from "path"
 import rawBody from "raw-body"
 
@@ -70,5 +71,8 @@ process.on("unhandledRejection", error => {
 })
 
 server.listen(PORT, () => {
-  console.log(`🚀 Ready! http://localhost:${server.address().port}/`)
+  const url = `http://localhost:${server.address().port}/`
+
+  console.log(`🚀 Ready! ${url}`)
+  opn(url)
 })

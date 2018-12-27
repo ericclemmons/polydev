@@ -8,6 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "esm": "^3.0.84",
+    "opn": "^5.4.0",
     "raw-body": "^2.3.3"
   }
 }
