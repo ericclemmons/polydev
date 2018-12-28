@@ -1,0 +1,74 @@
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes rotate {
+        from {
+          filter: hue-rotate(0deg);
+        }
+
+        to {
+          filter: hue-rotate(360deg);
+        }
+      }
+
+      body {
+        align-items: center;
+        animation: fadeIn 3s;
+        background: white;
+        display: flex;
+        font-family: 'Quicksand', sans-serif;
+        font-size: 2vh;
+        font-weight: 300;
+        height: 100%;
+        margin: 0;
+        justify-content: center;
+        width: 100%;
+      }
+
+      #splash {
+        animation: rotate 15s alternate;
+        background: url("/triangilify.svg") no-repeat center center fixed;
+        background-size: cover;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: -1;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-weight: 500;
+      }
+
+      main {
+        background: white;
+        border-radius: 3px;
+        box-shadow: 0 2vw 4vw 0 rgba(0, 0, 0, 0.11), 0 2vw 4vw 0 rgba(0, 0, 0, 0.08);
+        padding: 5ch;
+      }
+
+      kbd {
+        background-color: #fafbfc;
+        border: 1px solid #c6cbd1;
+        border-bottom-color: rgb(198, 203, 209);
+        border-bottom-color: #959da5;
+        border-radius: 3px;
+        box-shadow: inset 0 -1px 0 #959da5;
+        color: #444d56;
+        display: inline-block;
+        padding: 3px 5px;
+        vertical-align: middle;
+      }
