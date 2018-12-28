@@ -11,7 +11,12 @@ module.exports = (req, res) => {
         👋 Howdy from <kbd>polydev</kbd>
       </h1>
 
-      See an example <a href="/does-not-exist"><code>404</code> page</a>.
+      <h3>Examples</h3>
+      <ul>
+        <li>
+          <a href="/apollo-server">Apollo Server</a>
+        </li>
+      </ul>
     </main>
   `)
 }
