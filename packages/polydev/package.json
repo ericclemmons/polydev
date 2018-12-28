@@ -1,0 +1,14 @@
+{
+  "name": "polydev",
+  "version": "1.0.0",
+  "bin": "./polydev",
+  "main": "./index.js",
+  "repository": "git@github.com:ericclemmons/polydev.git",
+  "author": "Eric Clemmons <eric@smarterspam.com>",
+  "license": "MIT",
+  "dependencies": {
+    "esm": "^3.0.84",
+    "opn": "^5.4.0",
+    "raw-body": "^2.3.3"
+  }
+}
