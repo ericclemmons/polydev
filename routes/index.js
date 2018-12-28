@@ -14,6 +14,9 @@ module.exports = (req, res) => {
       <h3>Examples</h3>
       <ul>
         <li>
+          <a href="/does-not-exist"><code>404</code> page</a>.
+        </li>
+        <li>
           <a href="/apollo-server">Apollo Server</a>
         </li>
       </ul>
