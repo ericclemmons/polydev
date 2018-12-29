@@ -1,28 +1,15 @@
 import { fork } from "child_process"
 import path from "path"
 import rawBody from "raw-body"
-import st from "st"
 
 import findAvailablePort from "./findAvailablePort"
 
 const cwd = process.cwd()
 const lambdaPath = path.join(__dirname, "./lambda.js")
-const mount = st({
-  cache: false,
-  index: false,
-  passthrough: true,
-  path: "./public/",
-  url: "/"
-})
 const { NODE_ENV = "development" } = process.env
 const processes = new Map()
 
-// Attempt to serve a static asset
-const asset = (req, res) => new Promise(resolve => mount(req, res, resolve))
-
 export default async function handler(req, res) {
-  await asset(req, res)
-
   const { url } = req
 
   const handler = path.join(cwd, "routes", url, "index.js")

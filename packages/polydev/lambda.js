@@ -1,3 +1,5 @@
+const express = require("express")
+
 const { request, Server } = require("http")
 
 if (!process.send) {
@@ -10,7 +12,7 @@ if (!handlerPath) {
   throw new Error("Filepath to handler was not provided as an argument")
 }
 // Enable ESM for all dependencies
-require = require("esm")(module)
+// require = require("esm")(module)
 
 let handler
 try {
@@ -20,9 +22,9 @@ try {
   throw error
 }
 
-const server = new Server(handler)
+const app = express().use(handler)
 
-server.listen(process.env.PORT, async () => {
+const server = app.listen(process.env.PORT, async () => {
   const { port } = server.address()
 
   process.on("message", async event => {

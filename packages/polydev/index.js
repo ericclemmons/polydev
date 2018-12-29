@@ -1,8 +1,8 @@
-import { Server } from "http"
+import express from "express"
 import opn from "opn"
+
 import handler from "./handler"
 
-const server = new Server(handler)
 const { PORT = 3000 } = process.env
 
 process.on("uncaughtException", error => {
@@ -15,7 +15,16 @@ process.on("unhandledRejection", error => {
   console.error("unhandledRejection", error)
 })
 
-server.listen(PORT, () => {
+const proxy = express()
+  .use(
+    express.static("public", {
+      index: false,
+      fallthrough: true
+    })
+  )
+  .use(handler)
+
+const server = proxy.listen(PORT, () => {
   const url = `http://localhost:${server.address().port}/`
 
   console.log(`🚀 Ready! ${url}`)
