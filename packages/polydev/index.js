@@ -28,5 +28,7 @@ const server = proxy.listen(PORT, () => {
   const url = `http://localhost:${server.address().port}/`
 
   console.log(`🚀 Ready! ${url}`)
-  opn(url)
+  if (process.argv.includes("--open")) {
+    opn(url)
+  }
 })
