@@ -32,6 +32,10 @@
         width: 100%;
       }
 
+      body.error {
+        background: red;
+      }
+
       #splash {
         animation: rotate 15s alternate;
         background: url("/triangilify.svg") no-repeat center center fixed;
@@ -42,6 +46,10 @@
         right: 0;
         top: 0;
         z-index: -1;
+      }
+
+      .error #splash {
+        opacity: 0.5;
       }
 
       h1,

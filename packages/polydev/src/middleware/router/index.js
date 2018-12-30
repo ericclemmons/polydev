@@ -1,36 +1,37 @@
 import { fork } from "child_process"
+import { existsSync } from "fs"
 import path from "path"
 import rawBody from "raw-body"
 
 import findAvailablePort from "./findAvailablePort"
 
 const cwd = process.cwd()
-const lambdaPath = path.join(__dirname, "./lambda.js")
 const { NODE_ENV = "development" } = process.env
-const processes = new Map()
+const handlers = new Map()
+const launcherPath = path.resolve(__dirname, "./launcher.js")
 
-export default async function handler(req, res) {
-  const { url } = req
+export default async function router(req, res, next) {
+  const routePath = req.path
+  const handlerPath = path.join(cwd, "routes", routePath, "index.js")
 
-  const handler = path.join(cwd, "routes", url, "index.js")
+  if (!existsSync(handlerPath)) {
+    return next()
+  }
+
   const env = {
     NODE_ENV,
     PORT: await findAvailablePort()
   }
 
-  if (processes.has(handler)) {
-    processes.get(handler).kill()
-    processes.delete(handler)
+  if (handlers.has(handlerPath)) {
+    handlers.get(handlerPath).kill()
+    handlers.delete(handlerPath)
   }
 
-  const child = fork(lambdaPath, [handler], { cwd, env })
-
-  child.on("error", error => {
-    console.error("error", { error })
-  })
+  const child = fork(launcherPath, [handlerPath, routePath], { cwd, env })
+  handlers.set(handlerPath, child)
 
   // TODO Wait for `env.PORT` to become available?
-  processes.set(handler, child)
 
   const event = {
     host: req.headers.host,
@@ -41,6 +42,8 @@ export default async function handler(req, res) {
   }
 
   child.send(event)
+
+  // Wait for bridge to respond back
   child.on("message", payload => {
     const { body, encoding = "utf8", headers = {}, statusCode } = payload
 

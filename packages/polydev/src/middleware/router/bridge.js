@@ -1,33 +1,11 @@
-const express = require("express")
+const { request } = require("http")
 
-const { request, Server } = require("http")
+module.exports = (port = process.env.PORT) => {
+  if (!port) {
+    throw new Error(`Cannot bridge connections without an explicit PORt`)
+  }
 
-if (!process.send) {
-  throw new Error(`${__filename} was not forked`)
-}
-
-const [, , handlerPath] = process.argv
-
-if (!handlerPath) {
-  throw new Error("Filepath to handler was not provided as an argument")
-}
-// Enable ESM for all dependencies
-// require = require("esm")(module)
-
-let handler
-try {
-  handler = require(handlerPath)
-} catch (error) {
-  process.send({ statusCode: 404, body: error.message })
-  throw error
-}
-
-const app = express().use(handler)
-
-const server = app.listen(process.env.PORT, async () => {
-  const { port } = server.address()
-
-  process.on("message", async event => {
+  return async function bridge(event) {
     const { body, headers, method, path } = event
     const options = {
       headers,
@@ -62,5 +40,5 @@ const server = app.listen(process.env.PORT, async () => {
     }
 
     req.end()
-  })
-})
+  }
+}
