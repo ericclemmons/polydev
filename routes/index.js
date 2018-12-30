@@ -22,6 +22,9 @@ module.exports = (req, res) => {
         <li>
           <a href="/express">Express</a>
         </li>
+        <li>
+          <a href="/graphql">GraphQL</a>
+        </li>
       </ul>
     </main>
   `)
