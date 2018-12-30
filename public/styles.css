@@ -20,7 +20,7 @@
 
       body {
         align-items: center;
-        animation: fadeIn 3s;
+        animation: fadeIn 1s;
         background: white;
         display: flex;
         font-family: 'Quicksand', sans-serif;
