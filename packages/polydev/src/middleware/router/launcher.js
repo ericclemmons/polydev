@@ -6,20 +6,27 @@ const bridge = require("./bridge")
 // via: https://github.com/programble/errio
 
 const { PORT } = process.env
-const [, , handlerPath, baseUrl = "/"] = process.argv
-const exported = require(handlerPath)
-const handler = exported.default || exported
+const [, , ...args] = process.argv
 
-if (typeof handler === "function") {
-  const app = express().use(express.Router().use(baseUrl, handler))
+async function startHandler(handlerPath, baseUrl = "/") {
+  const exported = require(handlerPath)
+  const handler = await (exported.default || exported)
 
-  const server = app.listen(PORT, async () => {
-    const url = `http://localhost:${server.address().port}/`
+  const url = `http://localhost:${PORT}/`
 
-    console.log(`↩︎  ${handlerPath.replace(process.cwd(), ".")} from ${url}`)
-  })
-} else {
-  console.warn(`${handlerPath} did not export a function`)
+  if (typeof handler === "function") {
+    const app = express().use(baseUrl, handler)
+
+    app.listen(PORT, async () => {
+      console.log(`↩︎  ${handlerPath.replace(process.cwd(), ".")} from ${url}`)
+    })
+  } else {
+    console.warn(
+      `${handlerPath} did not export a function. Assuming a server...`
+    )
+  }
+
+  process.on("message", bridge(PORT))
 }
 
-process.on("message", bridge(PORT))
+startHandler(...args)
