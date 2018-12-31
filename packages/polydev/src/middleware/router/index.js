@@ -3,6 +3,7 @@ import { existsSync } from "fs"
 import path from "path"
 import rawBody from "raw-body"
 import generateId from "uuid/v1"
+import waitOn from "wait-on"
 import findAvailablePort from "./findAvailablePort"
 
 const cwd = process.cwd()
@@ -23,7 +24,7 @@ export default async function router(req, res, next) {
 
   let child
 
-  // TODO When should these be restarted?
+  // TODO Don't kill these with every request
   if (handlers.has(handlerPath)) {
     handlers.get(handlerPath).kill()
     handlers.delete(handlerPath)
@@ -38,6 +39,12 @@ export default async function router(req, res, next) {
       env
     })
     handlers.set(handlerPath, child)
+
+    // Some things have a build step like Next and aren't ready yet.
+    // TODO This takes ~1-1.5s every time, but I don't know why.
+    // This can be removed & work for most examples _except_ next.
+    await waitOn({ interval: 10, resources: [`tcp:${env.PORT}`] }, undefined)
+
     child.on("message", payload => {
       const {
         body,
