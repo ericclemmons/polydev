@@ -6,7 +6,7 @@ module.exports = (port = process.env.PORT) => {
   }
 
   return async function bridge(event) {
-    const { body, headers, method, path } = event
+    const { body, headers, method, path, uuid } = event
     const options = {
       headers,
       method,
@@ -27,10 +27,11 @@ module.exports = (port = process.env.PORT) => {
         delete res.headers["content-length"]
 
         process.send({
-          statusCode: res.statusCode,
-          headers: res.headers,
           body: Buffer.concat(chunks).toString("base64"),
-          encoding: "base64"
+          encoding: "base64",
+          headers: res.headers,
+          statusCode: res.statusCode,
+          uuid
         })
       })
     })
