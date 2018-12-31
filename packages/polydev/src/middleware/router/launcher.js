@@ -21,6 +21,8 @@ async function startHandler(handlerPath, baseUrl = "/") {
       console.log(`↩︎  ${handlerPath.replace(process.cwd(), ".")} from ${url}`)
     })
   } else {
+    // TODO Do not allow empty exports!
+    // ! A server or _something_ has to be returned!
     console.warn(
       `${handlerPath} did not export a function. Assuming a server...`
     )
