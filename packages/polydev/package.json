@@ -10,6 +10,7 @@
     "esm": "^3.0.84",
     "express": "^4.16.4",
     "fs-jetpack": "^2.2.0",
+    "hot-module-replacement": "^3.0.2",
     "opn": "^5.4.0",
     "raw-body": "^2.3.3",
     "uuid": "^3.3.2",

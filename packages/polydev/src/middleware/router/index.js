@@ -24,20 +24,16 @@ export default async function router(req, res, next) {
 
   let child
 
-  // TODO Don't kill these with every request
-  if (handlers.has(handlerPath)) {
-    handlers.get(handlerPath).kill()
-    handlers.delete(handlerPath)
-  }
+  // TODO Kill these when double-saved
+  // if (handlers.has(handlerPath)) {
+  //   handlers.get(handlerPath).kill()
+  //   handlers.delete(handlerPath)
+  // }
 
   if (handlers.has(handlerPath)) {
     child = handlers.get(handlerPath)
   } else {
-    // TODO Wait for `env.PORT` to become available?
-    child = fork(launcherPath, [handlerPath, routePath], {
-      cwd,
-      env
-    })
+    child = fork(launcherPath, [handlerPath, routePath], { cwd, env })
     handlers.set(handlerPath, child)
 
     // Some things have a build step like Next and aren't ready yet.

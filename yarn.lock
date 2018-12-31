@@ -2961,6 +2961,14 @@ hosted-git-info@^2.1.4:
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.7.1.tgz#97f236977bd6e125408930ff6de3eec6281ec047"
   integrity sha512-7T/BxH19zbcCTa8XkMlbK5lTo1WtgkFi3GvdWEyNuc4Vex7/9Dqbnpsf4JMydcfj9HCg4zUWFTL3Za6lapg5/w==
 
+hot-module-replacement@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/hot-module-replacement/-/hot-module-replacement-3.0.2.tgz#62187e773fd93bb51cdaefd6addb83192055defa"
+  integrity sha512-WNA/AzEC7BA7kY9OwKN/ak3CGEGd83hXbBFBjShSv/MFrCjoVUuEWCZuBO4aDyBc4fGCTTHDStDie6zLh3AdVA==
+  dependencies:
+    is-builtin-module "^1.0.0"
+    node-watch "^0.5.8"
+
 html-entities@^1.2.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-1.2.1.tgz#0df29351f0721163515dfb9e5543e5f6eed5162f"
@@ -3953,6 +3961,11 @@ node-releases@^1.1.1:
   integrity sha512-j1gEV/zX821yxdWp/1vBMN0pSUjuH9oGUdLCb4PfUko6ZW7KdRs3Z+QGGwDUhYtSpQvdVVyLd2V0YvLsmdg5jQ==
   dependencies:
     semver "^5.3.0"
+
+node-watch@^0.5.8:
+  version "0.5.9"
+  resolved "https://registry.yarnpkg.com/node-watch/-/node-watch-0.5.9.tgz#da108bf9b5b28652ed1845523a30485c029a0b1c"
+  integrity sha512-W0SgGKaB9qSCfFfNj2uQZ/5BlVumaNHjVCAPdEoXrkEJ3ynSf/806LEz1rbDFbJ4+PL9G8IxRkJJTvZndd5D9g==
 
 nopt@^4.0.1:
   version "4.0.1"
