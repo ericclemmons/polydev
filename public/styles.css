@@ -36,6 +36,10 @@
         background: red;
       }
 
+      form {
+        margin: 0;
+      }
+
       #splash {
         animation: rotate 15s alternate;
         background: url("/triangilify.svg") no-repeat center center fixed;
