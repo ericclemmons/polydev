@@ -44,9 +44,14 @@ export default express().use(
     }
 
     const filepath = path.join(process.cwd(), "routes", req.path, "index.js")
+    const content = `
+module.exports = (req, res) => {
+  res.send("📝 ${req.path}")
+}
+`.trimLeft()
 
     // Ensure the file exists
-    jetpack.file(filepath)
+    jetpack.file(filepath, { content })
 
     // Open the file
     opn(`vscode://file/${filepath}`)
