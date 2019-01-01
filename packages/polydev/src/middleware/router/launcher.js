@@ -50,7 +50,7 @@ async function startHandler(handlerPath, baseUrl = "/") {
   const url = `http://localhost:${PORT}/`
 
   if (typeof handler === "function") {
-    const app = express().use(baseUrl, (req, res) => handler(req, res))
+    const app = express().use(handler)
 
     app.listen(PORT, async () => {
       console.log(`↩︎  ${handlerPath.replace(process.cwd(), ".")} from ${url}`)

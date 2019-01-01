@@ -20,7 +20,11 @@ export default async function router(req, res, next) {
     return next()
   }
 
-  const env = { NODE_ENV, PORT: await findAvailablePort() }
+  const env = {
+    NODE_ENV,
+    PORT: await findAvailablePort(),
+    ROUTE_PATH: routePath
+  }
 
   let child
 
@@ -35,7 +39,7 @@ export default async function router(req, res, next) {
     // This can be removed & work for most examples _except_ next.
     await waitOn({ interval: 10, resources: [`tcp:${env.PORT}`] }, undefined)
 
-    child.on("message", message => {
+    child.on("message", (message) => {
       if (message === "restart") {
         handlers.get(handlerPath).kill()
         return handlers.delete(handlerPath)
