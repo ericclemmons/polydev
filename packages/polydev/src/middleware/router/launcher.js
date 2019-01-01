@@ -50,7 +50,10 @@ async function startHandler(handlerPath, baseUrl = "/") {
   const url = `http://localhost:${PORT}/`
 
   if (typeof handler === "function") {
-    const app = express().use(handler)
+    const app = express().use(
+      // Make sure we always evaluate at run-time for the latest HMR'd handler
+      (req, res) => handler(req, res)
+    )
 
     app.listen(PORT, async () => {
       console.log(`↩︎  ${handlerPath.replace(process.cwd(), ".")} from ${url}`)
