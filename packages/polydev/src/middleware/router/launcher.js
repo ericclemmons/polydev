@@ -61,7 +61,11 @@ async function startHandler(handlerPath, baseUrl = "/") {
     throw new Error(`${handlerPath} must return a Function or a Server`)
   }
 
-  process.on("message", bridge(PORT))
+  process.on("message", async (event) => {
+    const payload = await bridge(PORT, event)
+
+    process.send(payload)
+  })
 }
 
 startHandler(...args)

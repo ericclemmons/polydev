@@ -1,19 +1,19 @@
 const { request } = require("http")
 
-module.exports = (port = process.env.PORT) => {
+module.exports = async function bridge(port = process.env.PORT, event) {
   if (!port) {
     throw new Error(`Cannot bridge connections without an explicit PORt`)
   }
 
-  return async function bridge(event) {
-    const { body, headers, method, path, uuid } = event
-    const options = {
-      headers,
-      method,
-      port,
-      path
-    }
+  const { body, headers, method, path, uuid } = event
+  const options = {
+    headers,
+    method,
+    port,
+    path
+  }
 
+  return new Promise(resolve => {
     const req = request(options, res => {
       const chunks = []
 
@@ -26,7 +26,7 @@ module.exports = (port = process.env.PORT) => {
         delete res.headers.connection
         delete res.headers["content-length"]
 
-        process.send({
+        resolve({
           body: Buffer.concat(chunks).toString("base64"),
           encoding: "base64",
           headers: res.headers,
@@ -41,5 +41,5 @@ module.exports = (port = process.env.PORT) => {
     }
 
     req.end()
-  }
+  })
 }
