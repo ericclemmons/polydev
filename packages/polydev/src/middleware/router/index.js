@@ -28,7 +28,7 @@ export default async function router(req, res, next) {
 
   let child = handlers.get(handlerPath)
 
-  if (!child) {
+  if (!child || !child.connected) {
     child = fork(launcherPath, [handlerPath, routePath], { cwd, env })
     handlers.set(handlerPath, child)
 
