@@ -5,16 +5,6 @@ import { assets, error, notFound, router } from "./middleware"
 
 const { PORT = 3000 } = process.env
 
-process.on("uncaughtException", error => {
-  // TODO Youch
-  console.error("uncaughtException", error)
-})
-
-process.on("unhandledRejection", error => {
-  // TODO Youch
-  console.error("unhandledRejection", error)
-})
-
 const proxy = express()
   .use(assets)
   .use(router)
