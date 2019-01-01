@@ -1,3 +1,6 @@
+// TODO HMR doesn't work when replacing the entire server.
+// How can we make that more resilient? Mock out `.listen` to work _once_?
+// Disable HMR for the entry file only?
 require("hot-module-replacement")({
   // options are optional
   ignore: /node_modules/ // regexp to decide if module should be ignored; also can be a function accepting string and returning true/false
