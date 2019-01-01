@@ -24,12 +24,6 @@ export default async function router(req, res, next) {
 
   let child
 
-  // TODO Kill these when double-saved
-  // if (handlers.has(handlerPath)) {
-  //   handlers.get(handlerPath).kill()
-  //   handlers.delete(handlerPath)
-  // }
-
   if (handlers.has(handlerPath)) {
     child = handlers.get(handlerPath)
   } else {
@@ -41,14 +35,19 @@ export default async function router(req, res, next) {
     // This can be removed & work for most examples _except_ next.
     await waitOn({ interval: 10, resources: [`tcp:${env.PORT}`] }, undefined)
 
-    child.on("message", payload => {
+    child.on("message", message => {
+      if (message === "restart") {
+        handlers.get(handlerPath).kill()
+        return handlers.delete(handlerPath)
+      }
+
       const {
         body,
         encoding = "utf8",
         headers = {},
         statusCode = 200,
         uuid
-      } = payload
+      } = message
 
       if (!uuid) {
         throw new Error(
@@ -56,7 +55,7 @@ export default async function router(req, res, next) {
         )
       }
 
-      const response = responses.get(payload.uuid)
+      const response = responses.get(message.uuid)
 
       if (!response) {
         throw new Error(`No response exists for UUID "${uuid}"`)

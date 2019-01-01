@@ -25,9 +25,25 @@ async function startHandler(handlerPath, baseUrl = "/") {
   let handler = await getLatestHandler()
 
   if (module.hot) {
+    let recentlySaved = false
+
     module.hot.accept(handlerPath, async () => {
+      if (recentlySaved) {
+        console.log(`♻️  Restarting ${baseUrl}`)
+        return process.send("restart")
+      }
+
       handler = await getLatestHandler()
       console.log(`🔁  Hot-reloaded ${baseUrl}`)
+
+      // TODO Send reload signal
+
+      // Wait for a double-save
+      recentlySaved = true
+      // Outside of double-save reload window
+      setTimeout(() => {
+        recentlySaved = false
+      }, 500)
     })
   }
 
