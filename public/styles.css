@@ -24,11 +24,11 @@
         background: white;
         display: flex;
         font-family: 'Quicksand', sans-serif;
-        font-size: 2vh;
+        font-size: 16px;
         font-weight: 300;
         height: 100%;
-        margin: 0;
         justify-content: center;
+        margin: 0;
         width: 100%;
       }
 
