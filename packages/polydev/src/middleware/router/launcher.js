@@ -19,6 +19,7 @@ const bridge = require("./bridge")
 const { PORT } = process.env
 const [, , ...args] = process.argv
 
+// TODO Remove baseUrl unless it's needed in the route
 async function startHandler(handlerPath, baseUrl = "/") {
   const getLatestHandler = async () => {
     const exported = require(handlerPath)

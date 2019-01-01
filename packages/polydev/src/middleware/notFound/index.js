@@ -43,6 +43,10 @@ export default express().use(
       return next()
     }
 
+    throw new Error(
+      "Don't do this until we can verify the user actually said create this page! Just because an errant 404 got POST'd doesn't mean we create a page, _especially_ if it exists!"
+    )
+
     const filepath = path.join(process.cwd(), "routes", req.path, "index.js")
     const content = `
 module.exports = (req, res) => {
