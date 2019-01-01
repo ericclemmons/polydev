@@ -3,24 +3,23 @@ const next = require("next")
 
 const port = parseInt(process.env.PORT, 10) || 3000
 const dev = process.env.NODE_ENV !== "production"
-const app = next({
+const pages = next({
   dev,
   // ! Explicitly override the default of process.cwd()
   dir: __dirname
 })
 
-app.setAssetPrefix("/next")
+pages.setAssetPrefix("/next")
 
-const handle = app.getRequestHandler()
+const handle = pages.getRequestHandler()
 
-app.prepare().then(() => {
-  const server = express()
+pages.prepare().then(() => {
+  const server = express().use(
+    "/next",
+    express().get("*", (req, res) => handle(req, res))
+  )
 
-  server.get("*", (req, res) => {
-    return handle(req, res)
-  })
-
-  server.listen(port, err => {
+  server.listen(port, (err) => {
     if (err) throw err
     console.log(`> Ready on http://localhost:${port}`)
   })

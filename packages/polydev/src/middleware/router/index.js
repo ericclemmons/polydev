@@ -16,6 +16,8 @@ export default async function router(req, res, next) {
   const routePath = req.path
   const handlerPath = path.join(cwd, "routes", routePath, "index.js")
 
+  // TODO Build up routes dynamically (like I did in Evolution.js) so that
+  // `/next` can respond to `/next/*`.
   if (!existsSync(handlerPath)) {
     return next()
   }
