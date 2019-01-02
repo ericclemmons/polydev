@@ -1,15 +1,33 @@
+import bodyParser from "body-parser"
 import express from "express"
 import jetpack from "fs-jetpack"
 import opn from "opn"
 import path from "path"
+import generateId from "uuid/v1"
+import waitOn from "wait-on"
 
-export default express().use(
-  function getNotFound(req, res, next) {
-    if (req.method !== "GET") {
-      return next()
-    }
+const nonce = generateId()
 
-    res.status(404).send(`
+export default express()
+  // req.body is needed
+  .use(bodyParser.urlencoded({ extended: false }))
+  .use(bodyParser.json())
+
+  // This handler only responds to GET/POST, not HEAD/OPTIONS/etc.
+  .use(
+    function onlyGetPost(req, res, next) {
+      if (["GET", "POST"].includes(req.method)) {
+        return next()
+      }
+
+      return next("route")
+    },
+    function getNotFound(req, res, next) {
+      if (req.method !== "GET") {
+        return next()
+      }
+
+      res.status(404).send(`
       <head>
         <link href="https://fonts.googleapis.com/css?family=Quicksand:300,500" rel="stylesheet">
         <link href="./styles.css" rel="stylesheet">
@@ -31,37 +49,56 @@ export default express().use(
 
           <footer>
             <form method="post">
+              <input name="nonce" type="hidden" value="${nonce}" />
+              <input name="path" type="hidden" value="${req.path}" />
+
               <button>Create <code>./routes${req.path}/index.js</code></button>
             </form>
           </footer>
         </section>
       </body>
     `)
-  },
-  function postCreateRoute(req, res, next) {
-    if (req.method !== "POST") {
-      return next()
-    }
+    },
+    async function postCreateRoute(req, res, next) {
+      if (req.method !== "POST") {
+        return next()
+      }
 
-    throw new Error(
-      "Don't do this until we can verify the user actually said create this page! Just because an errant 404 got POST'd doesn't mean we create a page, _especially_ if it exists!"
-    )
+      if (req.body.nonce !== nonce) {
+        throw new Error(`Invalid "nonce" value`)
+      }
 
-    const filepath = path.join(process.cwd(), "routes", req.path, "index.js")
-    const content = `
+      if (req.body.path !== req.path) {
+        throw new Error(
+          `Expected ${JSON.stringify(req.path)}, not ${JSON.stringify(
+            req.body.path
+          )}`
+        )
+      }
+
+      const filepath = path.join(process.cwd(), "routes", req.path, "index.js")
+
+      if (jetpack.exists(filepath)) {
+        throw new Error(`Route already exists at ${filepath}`)
+      }
+
+      const content = `
 module.exports = (req, res) => {
   res.send("📝 ${req.path}")
 }
 `.trimLeft()
 
-    // Ensure the file exists
-    jetpack.file(filepath, { content })
+      // Create the file exists
+      jetpack.file(filepath, { content })
 
-    // Open the file
-    opn(`vscode://file/${filepath}`)
+      // Wait for the file to exist
+      await waitOn({ resources: [filepath] }, undefined)
 
-    // Reload the page by going to the path in the browser
-    // (we don't want the port!)
-    res.redirect(req.originalUrl)
-  }
-)
+      // Wait for the file to open
+      await opn(`vscode://file/${filepath}`, { wait: false })
+
+      // Reload the requested URL
+      // ! Hopefully the router has been re-created by this point!
+      res.redirect(req.originalUrl)
+    }
+  )

@@ -7,6 +7,7 @@
   "author": "Eric Clemmons <eric@smarterspam.com>",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "chokidar": "^2.0.4",
     "debug": "^4.1.1",
     "esm": "^3.0.84",
