@@ -15,19 +15,15 @@ const cwd = process.cwd()
 
 export default function handle(file) {
   return async function handler(req, res, next) {
-    // TODO Replace with `route`?
-    const routePath = req.path
     const env = {
       NODE_ENV,
-      PORT: await findAvailablePort(),
-      ROUTE_PATH: routePath
+      PORT: await findAvailablePort()
     }
 
     let child = handlers.get(file)
 
     if (!child || !child.connected) {
-      // TODO Should this be the full URL?
-      child = fork(launcherPath, [file, routePath], { cwd, env })
+      child = fork(launcherPath, [file, req.path], { cwd, env })
       handlers.set(file, child)
 
       // Some things have a build step like Next and aren't ready yet.
