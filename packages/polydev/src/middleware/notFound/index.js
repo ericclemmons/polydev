@@ -28,36 +28,38 @@ export default express()
       }
 
       res.status(404).send(`
-      <head>
-        <link href="https://fonts.googleapis.com/css?family=Quicksand:300,500" rel="stylesheet">
-        <link href="./styles.css" rel="stylesheet">
-      </head>
-      <body class="error">
+        <head>
+          <link href="https://fonts.googleapis.com/css?family=Quicksand:300,500" rel="stylesheet">
+          <link href="./styles.css" rel="stylesheet">
+        </head>
+        <body class="error">
 
-        <div id="splash"></div>
+          <div id="splash"></div>
 
-        <section>
-          <main>
-            <h1>
-              <code>404</code> Not Found
-            </h1>
+          <section>
+            <main>
+              <h1>
+                <code>404</code> Not Found
+              </h1>
 
-            <p>
-              <kbd>${req.path}</kbd>
-            </p>
-          </main>
+              <p>
+                <kbd>${req.path}</kbd>
+              </p>
+            </main>
 
-          <footer>
-            <form method="post">
-              <input name="nonce" type="hidden" value="${nonce}" />
-              <input name="path" type="hidden" value="${req.path}" />
+            <footer>
+              <form method="post">
+                <input name="nonce" type="hidden" value="${nonce}" />
+                <input name="path" type="hidden" value="${req.path}" />
 
-              <button>Create <code>./routes${req.path}/index.js</code></button>
-            </form>
-          </footer>
-        </section>
-      </body>
-    `)
+                <button>Create <code>./routes${
+                  req.path
+                }/index.js</code></button>
+              </form>
+            </footer>
+          </section>
+        </body>
+      `)
     },
     async function postCreateRoute(req, res, next) {
       if (req.method !== "POST") {
