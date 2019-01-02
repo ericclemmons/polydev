@@ -59,7 +59,10 @@ async function startHandler(handlerPath, baseUrl = "/") {
   const url = `http://localhost:${PORT}/`
 
   if (typeof handler === "function") {
+    // `.use` so that we mount `/` to respond under the incoming `baseUrl`
+    // The GET/POST differentiation has already been handled in the parent router.
     const app = express().use(
+      baseUrl,
       // Make sure we always evaluate at run-time for the latest HMR'd handler
       (req, res) => handler(req, res)
     )

@@ -1,1 +1,1 @@
-module.exports = require("polydev").mount("express-example")
+module.exports = require("express-example")

@@ -5,7 +5,8 @@ import handle from "./handle"
 
 const debug = require("debug")("polydev")
 
-const REGEXP_INDEX = /^index\.js$/
+// Match index[.*|get|post].js
+const REGEXP_INDEX = /^index(?:\.(\*|get|post))?\.js$/
 const REGEXP_PARAM = /\[([a-zA-Z0-9-]+)\]/g
 const REGEXP_PARAM_REPLACE = ":$1"
 const REGEXP_TRAILING_SLASH = /\/+$/
@@ -41,13 +42,40 @@ export default function createRouterFromWatcher(routesPath, watcher) {
         offset > 0 ? "" : match
       )
 
-    // Match route & all paths off it so that the underlying middleware
-    // can decide to serve it or not.
-    // TODO Nevermind, this is where `*.js` should match
-    debug("router.get(%o, %o)", route, path.relative(process.cwd(), file))
-    router.get(route, handle(file))
-    debug("router.post(%o, %o)", route, path.relative(process.cwd(), file))
-    router.post(route, handle(file))
+    const [, method] = base.match(REGEXP_INDEX)
+
+    switch (method) {
+      case "*":
+        const routes = [route, `${route}/*`]
+
+        debug("router.get(%o, %o)", routes, path.relative(process.cwd(), file))
+        router.get(routes, handle(file))
+
+        debug("router.post(%o, %o)", routes, path.relative(process.cwd(), file))
+        router.post(routes, handle(file))
+        return
+
+      case "post":
+        debug("router.post(%o, %o)", route, path.relative(process.cwd(), file))
+        router.post(route, handle(file))
+        return
+
+      case "get":
+        debug("router.get(%o, %o)", route, path.relative(process.cwd(), file))
+        router.get(route, handle(file))
+        return
+
+      case undefined:
+        debug("router.get(%o, %o)", route, path.relative(process.cwd(), file))
+        router.get(route, handle(file))
+
+        debug("router.post(%o, %o)", route, path.relative(process.cwd(), file))
+        router.post(route, handle(file))
+        return
+
+      default:
+        throw new Error(`Unsupported route filename: ${file}`)
+    }
   })
 
   return router
