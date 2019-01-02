@@ -1,28 +1,45 @@
 import Head from "next/head"
-import { Fragment } from "react"
+import { Component, Fragment } from "react"
 
-export default (req, res) => (
-  <Fragment>
-    <Head>
-      <link
-        href="https://fonts.googleapis.com/css?family=Quicksand:300,500"
-        rel="stylesheet"
-      />
-      <link href="/styles.css" rel="stylesheet" />
-    </Head>
+export default class NextExample extends Component {
+  state = { taps: 1 }
 
-    <div id="splash" />
+  render() {
+    const { taps } = this.state
 
-    <section>
-      <main>
-        <h1>
-          👋 Howdy from <kbd>Next.js</kbd>
-        </h1>
-      </main>
+    return (
+      <Fragment>
+        <Head>
+          <link
+            href="https://fonts.googleapis.com/css?family=Quicksand:300,500"
+            rel="stylesheet"
+          />
+          <link href="/styles.css" rel="stylesheet" />
+        </Head>
 
-      <footer>
-        <a href="/">&laquo; Back</a>
-      </footer>
-    </section>
-  </Fragment>
-)
+        <div id="splash" />
+
+        <section>
+          <main>
+            <h1>
+              👋 Howdy from <kbd>Next.js</kbd>
+            </h1>
+
+            <p>
+              <kbd>{taps}</kbd> {taps ? "taps" : "tap"}
+            </p>
+            <p>
+              <button onClick={() => this.setState({ taps: taps + 1 })}>
+                Tap me again 👊
+              </button>
+            </p>
+          </main>
+
+          <footer>
+            <a href="/">&laquo; Back</a>
+          </footer>
+        </section>
+      </Fragment>
+    )
+  }
+}
