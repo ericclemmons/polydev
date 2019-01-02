@@ -5,7 +5,7 @@ module.exports = (port = process.env.PORT) => {
     throw new Error(`Cannot bridge connections without an explicit PORt`)
   }
 
-  return async function bridge(event) {
+  return function bridge(event) {
     const { body, headers, method, path, uuid } = event
     const options = {
       headers,
@@ -14,11 +14,29 @@ module.exports = (port = process.env.PORT) => {
       path
     }
 
-    const req = request(options, res => {
+    const req = request(options, (res) => {
       const chunks = []
 
-      res.on("data", chunk => chunks.push(Buffer.from(chunk)))
-      res.on("error", error => {
+      process.send({
+        headers: res.headers,
+        statusCode: res.statusCode,
+        uuid
+      })
+
+      res.on("data", (chunk) => {
+        process.send({
+          body: chunk.toString("base64"),
+          encoding: "base64",
+          event: "data",
+          headers: res.headers,
+          statusCode: res.statusCode,
+          uuid
+        })
+
+        chunks.push(Buffer.from(chunk))
+      })
+
+      res.on("error", (error) => {
         throw error
       })
 
@@ -29,6 +47,7 @@ module.exports = (port = process.env.PORT) => {
         process.send({
           body: Buffer.concat(chunks).toString("base64"),
           encoding: "base64",
+          event: "end",
           headers: res.headers,
           statusCode: res.statusCode,
           uuid

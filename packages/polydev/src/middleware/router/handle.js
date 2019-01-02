@@ -41,6 +41,7 @@ export default function handle(file) {
           body,
           encoding = "utf8",
           headers = {},
+          event,
           statusCode = 200,
           uuid
         } = message
@@ -57,11 +58,25 @@ export default function handle(file) {
           throw new Error(`No response exists for UUID "${uuid}"`)
         }
 
-        response.set(headers)
-        response.status(statusCode)
-        response.send(Buffer.from(body, encoding))
+        switch (event) {
+          case "data":
+            response.write(Buffer.from(body, encoding))
+            break
 
-        responses.delete(uuid)
+          case "end":
+            if (!response.headersSent) {
+              response.set(headers)
+            }
+
+            response.status(statusCode)
+            response.send()
+            responses.delete(uuid)
+            break
+
+          default:
+            response.set(headers)
+            response.status(statusCode)
+        }
       })
     }
 
@@ -71,8 +86,6 @@ export default function handle(file) {
       headers: req.headers,
       host: req.headers.host,
       method: req.method,
-      // Remove `./routes/...` prefix
-      // path: `/${req.url.slice(req.path.length)}`,
       path: req.url,
       uuid: generateId()
     }
