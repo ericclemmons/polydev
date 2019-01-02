@@ -79,11 +79,7 @@ async function startHandler(handlerPath, baseUrl = "/") {
     )
   }
 
-  process.on("message", async (event) => {
-    const payload = await bridge(PORT, event)
-
-    process.send(payload)
-  })
+  process.on("message", bridge(PORT))
 }
 
 startHandler(...args)
