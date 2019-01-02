@@ -2,7 +2,7 @@ module.exports = (req, res) => {
   res.send(`
     <head>
       <link href="https://fonts.googleapis.com/css?family=Quicksand:300,500" rel="stylesheet">
-      <link href="./styles.css" rel="stylesheet">
+      <link href="/styles.css" rel="stylesheet">
     </head>
 
     <body>

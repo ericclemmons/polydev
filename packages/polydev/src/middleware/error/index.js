@@ -4,7 +4,7 @@ export default function errorHandler(error, req, res, next) {
   res.status(statusCode).send(`
     <body class="error">
       <link href="https://fonts.googleapis.com/css?family=Quicksand:300,500" rel="stylesheet">
-      <link href="./styles.css" rel="stylesheet">
+      <link href="/styles.css" rel="stylesheet">
 
       <div id="splash"></div>
 
