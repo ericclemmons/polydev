@@ -3025,6 +3025,13 @@ hot-module-replacement@^3.0.2:
     is-builtin-module "^1.0.0"
     node-watch "^0.5.8"
 
+"hot-replacement-module@https://github.com/ericclemmons/hot-module-replacement.git":
+  version "3.0.2"
+  resolved "https://github.com/ericclemmons/hot-module-replacement.git#7ea144567807406c9f2db41f7b3290f153b598cf"
+  dependencies:
+    is-builtin-module "^1.0.0"
+    node-watch "^0.5.8"
+
 html-entities@^1.2.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-1.2.1.tgz#0df29351f0721163515dfb9e5543e5f6eed5162f"
