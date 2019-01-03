@@ -3017,10 +3017,10 @@ hosted-git-info@^2.1.4:
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.7.1.tgz#97f236977bd6e125408930ff6de3eec6281ec047"
   integrity sha512-7T/BxH19zbcCTa8XkMlbK5lTo1WtgkFi3GvdWEyNuc4Vex7/9Dqbnpsf4JMydcfj9HCg4zUWFTL3Za6lapg5/w==
 
-hot-module-replacement@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/hot-module-replacement/-/hot-module-replacement-3.0.2.tgz#62187e773fd93bb51cdaefd6addb83192055defa"
-  integrity sha512-WNA/AzEC7BA7kY9OwKN/ak3CGEGd83hXbBFBjShSv/MFrCjoVUuEWCZuBO4aDyBc4fGCTTHDStDie6zLh3AdVA==
+hot-module-replacement@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/hot-module-replacement/-/hot-module-replacement-3.0.3.tgz#1da4cb5282fe7b4418b26a896cb7667c1f93328d"
+  integrity sha512-ugNO4vZXz8Tnf4MHCycvDiX8gpxibEdqOOfzmAcYm3zvQJZXpUy4LMbzr1EYtIQdNUg95U9NRQrmpTiCjLeDdQ==
   dependencies:
     is-builtin-module "^1.0.0"
     node-watch "^0.5.8"
