@@ -13,9 +13,6 @@ const express = require("express")
 
 const bridge = require("./bridge")
 
-// TODO Wrap this all in an async function so any errors can be caught & sent
-// via: https://github.com/programble/errio
-
 const { PORT } = process.env
 const [, , ...args] = process.argv
 
@@ -61,11 +58,15 @@ async function startHandler(handlerPath, baseUrl = "/") {
   if (typeof handler === "function") {
     // `.use` so that we mount `/` to respond under the incoming `baseUrl`
     // The GET/POST differentiation has already been handled in the parent router.
-    const app = express().use(
-      baseUrl,
-      // Make sure we always evaluate at run-time for the latest HMR'd handler
-      (req, res) => handler(req, res)
-    )
+    const app = express()
+      .use(
+        baseUrl,
+        // Make sure we always evaluate at run-time for the latest HMR'd handler
+        (req, res) => handler(req, res)
+      )
+      // When there's an uncaught error in the middleware, send it in a way
+      // that we can handle.
+      .use(require("../error"))
 
     app.listen(PORT, async () => {
       console.log(`↩︎  ${handlerPath.replace(process.cwd(), ".")} from ${url}`)

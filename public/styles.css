@@ -73,12 +73,15 @@
         background: white;
         border-radius: 3px;
         box-shadow: 0 2vw 4vw 0 rgba(0, 0, 0, 0.11), 0 2vw 4vw 0 rgba(0, 0, 0, 0.08);
-        overflow: hidden;
+        max-height: 80vh;
+        max-width: 80vw;
+        overflow: auto;
       }
 
       section header,
       section main,
       section footer {
+        overflow: auto;
         padding: 2.5ch 5ch;
       }
 

@@ -1,5 +1,5 @@
-export default function errorHandler(error, req, res, next) {
-  const { status, statusCode = 500 } = error
+module.exports = function errorHandler(error, req, res, next) {
+  const { status = "", statusCode = 500 } = error
 
   res.status(statusCode).send(`
     <body class="error">
@@ -8,15 +8,25 @@ export default function errorHandler(error, req, res, next) {
 
       <div id="splash"></div>
 
-      <main>
-        <h1>
-          <code>${statusCode}</code> ${status}
-        </h1>
+      <section>
+        <main>
+          <h1>
+            <code>${statusCode}</code> ${status}
+          </h1>
 
-        <pre>
-          <code>${error.message}</code>
-        </pre>
-      </main>
+          <pre><code>${error.message}</code></pre>
+        </main>
+
+        ${
+          error.stack
+            ? `
+        <footer>
+          <pre><code>${error.stack}</code></pre>
+        </footer>
+        `
+            : ""
+        }
+      </section>
     </body>
   `)
 }
