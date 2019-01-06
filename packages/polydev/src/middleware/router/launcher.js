@@ -60,7 +60,7 @@ async function startHandler(handlerPath, baseUrl = "/") {
     // The GET/POST differentiation has already been handled in the parent router.
     const app = express()
       .use(
-        baseUrl,
+        // baseUrl,
         // Make sure we always evaluate at run-time for the latest HMR'd handler
         (req, res) => handler(req, res)
       )

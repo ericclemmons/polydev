@@ -2,7 +2,7 @@ const express = require("express")
 
 let hits = 0
 
-module.exports = express().get("/", (req, res) => {
+module.exports = express().get("/express", (req, res) => {
   hits++
 
   res.send(`

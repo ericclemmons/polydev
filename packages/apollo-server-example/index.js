@@ -51,11 +51,4 @@ const app = express()
 // Mount GraphQL at the root, not `/graphql` by default
 apollo.applyMiddleware({ app, path: "/apollo-server" })
 
-// This `listen` method launches a web-server.  Existing apps
-// can utilize middleware options, which we'll discuss later.
-
-const server = app.listen(process.env.PORT, () => {
-  console.log(
-    `🚀 Apollo Server ready at http://localhost:${server.address().port}`
-  )
-})
+module.exports = app
