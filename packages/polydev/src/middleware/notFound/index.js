@@ -45,9 +45,7 @@ export default express()
               <p>
                 <kbd>${req.path}</kbd>
               </p>
-            </main>
 
-            <footer>
               <form method="post">
                 <input name="nonce" type="hidden" value="${nonce}" />
                 <input name="path" type="hidden" value="${req.path}" />
@@ -56,6 +54,10 @@ export default express()
                   req.path
                 }/index.js</code></button>
               </form>
+            </main>
+
+            <footer>
+              <a href="/">&laquo; Back</a>
             </footer>
           </section>
         </body>
