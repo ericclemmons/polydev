@@ -26,13 +26,16 @@ module.exports = (req, res) => {
               <a href="/apollo-server">Apollo Server</a>
             </li>
             <li>
-            <a href="/express">Express</a>
+              <a href="/express">Express</a>
             </li>
             <li>
-            <a href="/graphql">GraphQL</a>
+              <a href="/graphql">GraphQL</a>
             </li>
             <li>
-            <a href="/next">Next.js</a>
+              <a href="/next">Next.js</a>
+            </li>
+            <li>
+              <a href="/users/example">Parameterized Routes</a>
             </li>
             <li>
               <a href="/sse">Server-Sent Events (SSE)</a>
