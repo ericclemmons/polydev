@@ -61,8 +61,7 @@ export default function createRouterFromWatcher(routesPath, watcher) {
         break
 
       case undefined:
-        handle(router, file, [["GET", route]])
-        handle(router, file, [["POST", route]])
+        handle(router, file, [["GET", route], ["POST", route]])
         break
 
       default:
