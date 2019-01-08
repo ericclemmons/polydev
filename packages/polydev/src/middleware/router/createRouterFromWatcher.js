@@ -3,8 +3,6 @@ import path from "path"
 
 import handle from "./handle"
 
-const debug = require("debug")("polydev")
-
 // Match index[.*|get|post].js
 const REGEXP_INDEX = /^index(?:\.(\*|get|post))?\.js$/
 const REGEXP_PARAM = /\[([a-zA-Z0-9-]+)\]/g
@@ -46,32 +44,26 @@ export default function createRouterFromWatcher(routesPath, watcher) {
 
     switch (method) {
       case "*":
-        const routes = [route, `${route}/*`]
-
-        debug("router.get(%o, %o)", routes, path.relative(process.cwd(), file))
-        router.get(routes, handle(file))
-
-        debug("router.post(%o, %o)", routes, path.relative(process.cwd(), file))
-        router.post(routes, handle(file))
-        return
+        handle(router, file, [
+          ["GET", route],
+          ["GET", `${route}/*`],
+          ["POST", route],
+          ["POST", `${route}/*`]
+        ])
+        break
 
       case "post":
-        debug("router.post(%o, %o)", route, path.relative(process.cwd(), file))
-        router.post(route, handle(file))
-        return
+        handle(router, file, [["POST", route]])
+        break
 
       case "get":
-        debug("router.get(%o, %o)", route, path.relative(process.cwd(), file))
-        router.get(route, handle(file))
-        return
+        handle(router, file, [["GET", route]])
+        break
 
       case undefined:
-        debug("router.get(%o, %o)", route, path.relative(process.cwd(), file))
-        router.get(route, handle(file))
-
-        debug("router.post(%o, %o)", route, path.relative(process.cwd(), file))
-        router.post(route, handle(file))
-        return
+        handle(router, file, [["GET", route]])
+        handle(router, file, [["POST", route]])
+        break
 
       default:
         throw new Error(`Unsupported route filename: ${file}`)

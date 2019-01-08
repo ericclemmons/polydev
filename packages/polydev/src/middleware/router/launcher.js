@@ -14,10 +14,13 @@ const express = require("express")
 const bridge = require("./bridge")
 
 const { PORT } = process.env
-const [, , ...args] = process.argv
+const [, , handlerPath, routesString] = process.argv
+
+// Expected to be JSON.stringify([["GET", "/"]])
+const routes = JSON.parse(routesString)
 
 // TODO Remove baseUrl unless it's needed in the route
-async function startHandler(handlerPath, baseUrl = "/") {
+async function startHandler() {
   const getLatestHandler = async () => {
     const exported = require(handlerPath)
     const handler = await (exported.default || exported)
@@ -34,12 +37,12 @@ async function startHandler(handlerPath, baseUrl = "/") {
     if (typeof handler === "function") {
       module.hot.accept(handlerPath, async () => {
         if (recentlySaved) {
-          console.log(`♻️  Restarting ${baseUrl}`)
+          console.log(`♻️  Restarting ${handlerPath}`)
           return process.send("restart")
         }
 
         handler = await getLatestHandler()
-        console.log(`🔁  Hot-reloaded ${baseUrl}`)
+        console.log(`🔁  Hot-reloaded ${handlerPath}`)
 
         // TODO Send reload signal
 
@@ -56,17 +59,20 @@ async function startHandler(handlerPath, baseUrl = "/") {
   const url = `http://localhost:${PORT}/`
 
   if (typeof handler === "function") {
-    // `.use` so that we mount `/` to respond under the incoming `baseUrl`
-    // The GET/POST differentiation has already been handled in the parent router.
     const app = express()
-      .use(
-        // baseUrl,
+
+    routes.forEach(([method, route]) => {
+      app[method.toLowerCase()].call(
+        app,
+        route,
         // Make sure we always evaluate at run-time for the latest HMR'd handler
         (req, res) => handler(req, res)
       )
-      // When there's an uncaught error in the middleware, send it in a way
-      // that we can handle.
-      .use(require("../error"))
+    })
+
+    // When there's an uncaught error in the middleware, send it in a way
+    // that we can handle.
+    app.use(require("../error"))
 
     app.listen(PORT, async () => {
       console.log(`↩︎  ${handlerPath.replace(process.cwd(), ".")} from ${url}`)
@@ -83,4 +89,4 @@ async function startHandler(handlerPath, baseUrl = "/") {
   process.on("message", bridge(PORT))
 }
 
-startHandler(...args)
+startHandler()

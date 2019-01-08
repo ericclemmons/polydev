@@ -6,6 +6,7 @@ import waitOn from "wait-on"
 
 import findAvailablePort from "./findAvailablePort"
 
+const debug = require("debug")("polydev")
 const { NODE_ENV = "development" } = process.env
 
 const handlers = new Map()
@@ -13,8 +14,8 @@ const launcherPath = path.resolve(__dirname, "./launcher.js")
 const responses = new Map()
 const cwd = process.cwd()
 
-export default function handle(file) {
-  return async function handler(req, res, next) {
+export default function handle(router, file, routes) {
+  const handler = async (req, res, next) => {
     const env = {
       NODE_ENV,
       PORT: await findAvailablePort()
@@ -23,7 +24,7 @@ export default function handle(file) {
     let child = handlers.get(file)
 
     if (!child || !child.connected) {
-      child = fork(launcherPath, [file, req.path], { cwd, env })
+      child = fork(launcherPath, [file, JSON.stringify(routes)], { cwd, env })
       handlers.set(file, child)
 
       // Some things have a build step like Next and aren't ready yet.
@@ -93,4 +94,17 @@ export default function handle(file) {
     responses.set(event.uuid, res)
     child.send(event)
   }
+
+  routes.forEach(([httpMethod, route]) => {
+    const method = httpMethod.toLowerCase()
+
+    debug(`router.${method}(%o, %o)`, route, file.replace(process.cwd(), "."))
+
+    router[method].call(
+      router,
+      route,
+      // Make sure we always evaluate at run-time for the latest HMR'd handler
+      (req, res) => handler(req, res)
+    )
+  })
 }
