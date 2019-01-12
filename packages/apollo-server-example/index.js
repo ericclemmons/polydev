@@ -44,7 +44,12 @@ const resolvers = {
 // In the most basic sense, the ApolloServer can be started
 // by passing type definitions (typeDefs) and the resolvers
 // responsible for fetching the data for those types.
-const apollo = new ApolloServer({ typeDefs, resolvers })
+const apollo = new ApolloServer({
+  // Enable playground when NODE_ENV=production
+  playground: true,
+  typeDefs,
+  resolvers
+})
 
 const app = express()
 
