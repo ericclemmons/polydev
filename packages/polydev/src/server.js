@@ -16,7 +16,11 @@ process.on("unhandledRejection", (error) => {
 })
 
 const proxy = express()
-  // TODO Merge 404 & errors together
+
+proxy.use(assets("public"))
+proxy.use(router("routes"))
+
+// TODO Merge 404 & errors together
 if (process.env.NODE_ENV === "development") {
   proxy.use(notFound)
   proxy.use(error)

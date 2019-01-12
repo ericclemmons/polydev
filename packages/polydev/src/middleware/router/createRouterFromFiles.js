@@ -9,22 +9,18 @@ const REGEXP_PARAM = /\[([a-zA-Z0-9-]+)\]/g
 const REGEXP_PARAM_REPLACE = ":$1"
 const REGEXP_TRAILING_SLASH = /\/+$/
 
-module.exports = function createRouterFromWatcher(routesPath, watcher) {
+module.exports = function createRouterFromFiles(routesPath, files) {
   const router = express()
-  const watched = watcher.getWatched()
-  const folders = Object.keys(watched)
 
-  const files = folders
-    .reduce((files, folder) => {
-      const names = watched[folder].filter((name) => name.match(REGEXP_INDEX))
-
-      return files.concat(names.map((name) => path.resolve(folder, name)))
-    }, [])
-    // Ensure that explict route matches win
+  // Ensure that explict route matches win
+  files = files
+    // Ignore unknown route formats
+    .filter((file) => path.basename(file).match(REGEXP_INDEX))
     .sort((a, b) => {
       // Ignore filename when sorting
       return path.basename(a) < path.basename(b) ? -1 : 0
     })
+    // Most specific routes win
     .reverse()
 
   files.forEach((file) => {
