@@ -1,13 +1,11 @@
 const { fork } = require("child_process")
+const debug = require("debug")("polydev")
 const path = require("path")
 const rawBody = require("raw-body")
 const generateId = require("uuid/v1")
 const waitOn = require("wait-on")
 
 const findAvailablePort = require("./findAvailablePort")
-
-const debug = require("debug")("polydev")
-const { NODE_ENV = "development" } = process.env
 
 const handlers = new Map()
 const launcherPath = path.resolve(__dirname, "./launcher.js")
@@ -17,7 +15,11 @@ const cwd = process.cwd()
 module.exports = function handle(router, file, routes) {
   const handler = async (req, res, next) => {
     const env = {
-      NODE_ENV,
+      // Default to "development"
+      NODE_ENV: "development",
+      // Favor explicit env values
+      ...process.env,
+      // Override PORT since it's dynamic
       PORT: await findAvailablePort()
     }
 
