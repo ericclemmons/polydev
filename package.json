@@ -3,6 +3,7 @@
   "scripts": {
     "postinstall": "yarn workspace polydev link",
     "dev": "DEBUG=polydev polydev",
+    "prestart": "yarn workspace next-example build",
     "start": "NODE_ENV=production polydev"
   },
   "workspaces": ["packages/*"]

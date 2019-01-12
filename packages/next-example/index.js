@@ -13,14 +13,9 @@ pages.setAssetPrefix("/next")
 
 const handle = pages.getRequestHandler()
 
-pages.prepare().then(() => {
-  const server = express().use(
+module.exports = pages.prepare().then(() => {
+  return express().use(
     "/next",
     express().get("*", (req, res) => handle(req, res))
   )
-
-  server.listen(port, (err) => {
-    if (err) throw err
-    console.log(`> Ready on http://localhost:${port}`)
-  })
 })
