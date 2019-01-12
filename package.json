@@ -2,7 +2,8 @@
   "private": true,
   "scripts": {
     "postinstall": "yarn workspace polydev link",
-    "start": "DEBUG=polydev polydev"
+    "dev": "DEBUG=polydev polydev",
+    "start": "NODE_ENV=production polydev"
   },
   "workspaces": ["packages/*"]
 }
