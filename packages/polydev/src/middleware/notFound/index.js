@@ -1,14 +1,14 @@
-import bodyParser from "body-parser"
-import express from "express"
-import jetpack from "fs-jetpack"
-import opn from "opn"
-import path from "path"
-import generateId from "uuid/v1"
-import waitOn from "wait-on"
+const bodyParser = require("body-parser")
+const express = require("express")
+const jetpack = require("fs-jetpack")
+const opn = require("opn")
+const path = require("path")
+const generateId = require("uuid/v1")
+const waitOn = require("wait-on")
 
 const nonce = generateId()
 
-export default express()
+module.exports = express()
   // req.body is needed
   .use(bodyParser.urlencoded({ extended: false }))
   .use(bodyParser.json())

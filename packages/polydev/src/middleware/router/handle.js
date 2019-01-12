@@ -1,10 +1,10 @@
-import { fork } from "child_process"
-import path from "path"
-import rawBody from "raw-body"
-import generateId from "uuid/v1"
-import waitOn from "wait-on"
+const { fork } = require("child_process")
+const path = require("path")
+const rawBody = require("raw-body")
+const generateId = require("uuid/v1")
+const waitOn = require("wait-on")
 
-import findAvailablePort from "./findAvailablePort"
+const findAvailablePort = require("./findAvailablePort")
 
 const debug = require("debug")("polydev")
 const { NODE_ENV = "development" } = process.env
@@ -14,7 +14,7 @@ const launcherPath = path.resolve(__dirname, "./launcher.js")
 const responses = new Map()
 const cwd = process.cwd()
 
-export default function handle(router, file, routes) {
+module.exports = function handle(router, file, routes) {
   const handler = async (req, res, next) => {
     const env = {
       NODE_ENV,

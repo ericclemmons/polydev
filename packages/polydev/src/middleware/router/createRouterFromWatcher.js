@@ -1,7 +1,7 @@
-import express from "express"
-import path from "path"
+const express = require("express")
+const path = require("path")
 
-import handle from "./handle"
+const handle = require("./handle")
 
 // Match index[.*|get|post].js
 const REGEXP_INDEX = /^index(?:\.(\*|get|post))?\.js$/
@@ -9,7 +9,7 @@ const REGEXP_PARAM = /\[([a-zA-Z0-9-]+)\]/g
 const REGEXP_PARAM_REPLACE = ":$1"
 const REGEXP_TRAILING_SLASH = /\/+$/
 
-export default function createRouterFromWatcher(routesPath, watcher) {
+module.exports = function createRouterFromWatcher(routesPath, watcher) {
   const router = express()
   const watched = watcher.getWatched()
   const folders = Object.keys(watched)

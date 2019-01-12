@@ -1,6 +1,8 @@
-import express from "express"
+const express = require("express")
 
-export default express.static("public", {
+// TODO What are good production settings?
+// Sure, there should be a proxy/CDN for static assets, but whatever
+module.exports = express.static("public", {
   index: false,
   fallthrough: true
 })

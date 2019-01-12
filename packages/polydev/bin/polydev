@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require("esm")(module)("../src/server")
+require("../src/server")

@@ -1,7 +1,7 @@
-import express from "express"
-import opn from "opn"
+const express = require("express")
+const opn = require("opn")
 
-import { assets, error, notFound, router } from "./middleware"
+const { assets, error, notFound, router } = require("./middleware")
 
 const { PORT = 3000 } = process.env
 

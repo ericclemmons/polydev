@@ -1,8 +1,8 @@
-import chokidar from "chokidar"
-import express from "express"
-import path from "path"
+const chokidar = require("chokidar")
+const express = require("express")
+const path = require("path")
 
-import createRouterFromWatcher from "./createRouterFromWatcher"
+const createRouterFromWatcher = require("./createRouterFromWatcher")
 
 const routesPath = path.resolve(process.cwd(), "routes")
 const watcher = chokidar.watch(routesPath, { ignoreInitial: true })
@@ -20,4 +20,4 @@ watcher
   .on("unlink", updateRouter)
 
 // Ensure each request references the latest router
-export default (req, res, next) => router(req, res, next)
+module.exports = (req, res, next) => router(req, res, next)
