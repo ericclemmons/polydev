@@ -21,7 +21,7 @@ proxy.use(assets("public"))
 proxy.use(router("routes"))
 
 // TODO Merge 404 & errors together
-if (process.env.NODE_ENV === "development") {
+if (NODE_ENV === "development") {
   proxy.use(notFound)
   proxy.use(error)
 }
