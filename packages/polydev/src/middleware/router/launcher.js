@@ -9,7 +9,9 @@ require("hot-module-replacement")({
   ignore: /node_modules/ // regexp to decide if module should be ignored; also can be a function accepting string and returning true/false
 })
 
+const { spawn } = require("child_process")
 const express = require("express")
+const path = require("path")
 
 const bridge = require("./bridge")
 
@@ -79,12 +81,21 @@ async function startHandler() {
     app.listen(PORT, async () => {
       console.log(`↩︎  ${handlerPath.replace(process.cwd(), ".")} from ${url}`)
     })
+  } else if (typeof handler === "string") {
+    // Expected to have path to `package.json`
+    const pkg = require(handler)
+    const cwd = path.dirname(handler)
+
+    spawn("yarn", [pkg.scripts.dev ? "dev" : "start"], {
+      cwd,
+      stdio: "inherit"
+    })
   } else {
     console.warn(
       `${handlerPath.replace(
         process.cwd(),
         "."
-      )} does not return a Function, Server, or path to package.json`
+      )} does not return a Function, Server, or path to a package.json`
     )
     // In development, at least listen on PORT so that we can 404
     express().listen(PORT)
