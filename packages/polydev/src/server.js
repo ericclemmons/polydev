@@ -3,7 +3,7 @@ const opn = require("opn")
 
 const { assets, error, notFound, router } = require("./middleware")
 
-const { PORT = 3000 } = process.env
+const { NODE_ENV = "development", PORT = 3000 } = process.env
 
 process.on("uncaughtException", (error) => {
   // TODO Youch
@@ -16,11 +16,11 @@ process.on("unhandledRejection", (error) => {
 })
 
 const proxy = express()
-  .use(assets)
-  .use(router)
   // TODO Merge 404 & errors together
-  .use(notFound)
-  .use(error)
+if (process.env.NODE_ENV === "development") {
+  proxy.use(notFound)
+  proxy.use(error)
+}
 
 const server = proxy.listen(PORT, () => {
   const url = `http://localhost:${server.address().port}/`
