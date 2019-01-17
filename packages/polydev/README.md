@@ -28,13 +28,13 @@ As your project grows, **working on a large or monolithic [Node.js][node] app ge
 
 ## Roadmap
 
-- [ ] Reload browser on double-save (#1)
-- [ ] Loading screen, for slow routes (#2)
-- [ ] Option to install missing modules (#3)
-- [ ] ESM support (#4)
-- [ ] TypeScript support (#5)
-- [ ] Better errors for broken routes/modules (#6)
-- [ ] Storybook example (#7)
+- [ ] [Reload browser on double-save](/../../issues/1)
+- [ ] [Loading screen, for slow routes](/../../issues/2)
+- [ ] [Option to install missing modules](/../../issues/3)
+- [ ] [ESM support](/../../issues/4)
+- [ ] [TypeScript support](/../../issues/5)
+- [ ] [Better errors for broken routes/modules](/../../issues/6)
+- [ ] [Storybook example](/../../issues/7)
 - [ ] [View All][issues]
 
 ## Contributing
