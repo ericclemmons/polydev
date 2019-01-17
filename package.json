@@ -7,10 +7,5 @@
     "prestart": "yarn workspace next-example build",
     "start": "NODE_ENV=production polydev"
   },
-  "workspaces": [
-    "packages/*"
-  ],
-  "devDependencies": {
-    "np": "^3.1.0"
-  }
+  "workspaces": ["packages/*"]
 }
