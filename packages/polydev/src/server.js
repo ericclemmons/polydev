@@ -1,5 +1,6 @@
 const express = require("express")
 const opn = require("opn")
+const path = require("path")
 
 const { assets, error, notFound, router } = require("./middleware")
 
@@ -22,6 +23,7 @@ proxy.use(router("routes"))
 
 // TODO Merge 404 & errors together
 if (NODE_ENV === "development") {
+  proxy.use("/_polydev", assets(path.resolve(__dirname, "./public")))
   proxy.use(notFound)
   proxy.use(error)
 }

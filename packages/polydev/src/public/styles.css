@@ -46,7 +46,7 @@
 
       #splash {
         animation: rotate 15s alternate;
-        background: url("/triangilify.svg") no-repeat center center fixed;
+        background: url("./triangilify.svg") no-repeat center center fixed;
         background-size: cover;
         bottom: 0;
         left: 0;
