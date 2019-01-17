@@ -18,3 +18,7 @@ _(This is for "development" mode)_
 _(This is for "production" mode)_
 
 This project is a living example of how to use Polydev!
+
+## How to Publish
+
+1. `yarn release`

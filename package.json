@@ -4,6 +4,7 @@
     "preinstall": "yarn workspace polydev unlink",
     "postinstall": "yarn workspace polydev link",
     "dev": "DEBUG=polydev polydev",
+    "release": "yarn workspace polydev np",
     "prestart": "yarn workspace next-example build",
     "start": "NODE_ENV=production polydev"
   },
