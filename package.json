@@ -1,7 +1,6 @@
 {
   "private": true,
   "scripts": {
-    "preinstall": "yarn workspace polydev unlink",
     "postinstall": "yarn workspace polydev link",
     "dev": "DEBUG=polydev polydev",
     "release": "yarn workspace polydev np",
