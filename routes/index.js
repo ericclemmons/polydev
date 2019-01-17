@@ -32,6 +32,9 @@ module.exports = (req, res) => {
               <a href="/graphql">GraphQL</a>
             </li>
             <li>
+              <a href="/logo">Logo</a>
+            </li>
+            <li>
               <a href="/next">Next.js</a>
             </li>
             <li>
