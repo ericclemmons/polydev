@@ -26,6 +26,82 @@ As your project grows, **working on a large or monolithic [Node.js][node] app ge
 - Pretty `500` screens, so you spend less time in the terminal.
 - Iterative adoption, so it's easy to get started.
 
+## Quick Started
+
+1. Install
+
+   ```shell
+   yarn add polydev --dev
+   ```
+
+2. Run `polydev`
+
+   ```shell
+   yarn run polydev --open
+   ```
+
+## Definining `routes`
+
+The `routes` folder is similar to Old-Time&trade; HTML & PHP, where
+**folders mirror the URL structure**, followed by an `index.js` file:
+
+- `routes/`
+
+  - `page/[id]/index.js`
+
+    _Has access to `req.params.id`_ for <a href="http://localhost:3000/page/123">/page/123</a>.\_
+
+  - `contact-us/`
+
+    - `index.get.js`
+    - `index.post.js`
+
+  - `posts/index.*.js`
+
+    _Responds to both `GET` & `POST` for <a href="http://localhost:3000/posts/*">/posts/\*</a>._
+
+  - `index.js`
+
+    _Responds to both `GET` & `POST` for <a href="http://localhost:3000/">/</a>._
+
+### Route Handlers
+
+Route handlers can be any of the following:
+
+1. Functional middleware:
+
+   ```js
+   module.exports = (req, res) => {
+     res.send("Howdy there!")
+   }
+   ```
+
+2. Express apps:
+
+   ```js
+   const express = require("express")
+
+   module.exports = express().get("/", (req, res) => {
+     res.send(`Howdy from ${req.path}!`)
+   })
+   ```
+
+3. A [yarn workspace][workspaces] package:
+
+   ```js
+   module.exports = require("my-package-name")
+   ```
+
+4. A `package.json` path:
+
+   ```js
+   module.exports = require.resolve("my-app/package.json")
+   ```
+
+   These are considered stand-alone apps that will be ran via `yarn dev` or `yarn start` (whichever exists) for development only.
+
+   This is good for when you want to have a separate API server open on `process.env.PORT` that's not part of your application.
+
 ## Roadmap
 
 - [ ] [Reload browser on double-save](/../../issues/1)
