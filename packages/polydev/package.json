@@ -1,6 +1,6 @@
 {
   "name": "polydev",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "bin": "./bin/polydev",
   "main": "./src/index.js",
   "repository": "git@github.com:ericclemmons/polydev.git",
@@ -22,8 +22,5 @@
     "raw-body": "^2.3.3",
     "uuid": "^3.3.2",
     "wait-on": "^3.2.0"
-  },
-  "devDependencies": {
-    "np": "^3.1.0"
   }
 }
