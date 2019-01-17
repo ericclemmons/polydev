@@ -27,6 +27,10 @@ module.exports = express()
         return next()
       }
 
+      const filepath = path
+        .join(process.cwd(), "routes", req.path, "index.js")
+        .replace(process.cwd(), ".")
+
       res.status(404).send(`
         <head>
           <link href="https://fonts.googleapis.com/css?family=Quicksand:300,500" rel="stylesheet">
@@ -50,9 +54,7 @@ module.exports = express()
                 <input name="nonce" type="hidden" value="${nonce}" />
                 <input name="path" type="hidden" value="${req.path}" />
 
-                <button>Create <code>./routes${
-                  req.path
-                }/index.js</code></button>
+                <button>Create <code>${filepath}</code></button>
               </form>
             </main>
 
