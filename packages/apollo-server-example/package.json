@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "apollo-server-example",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "dependencies": {
     "apollo-server": "^2.3.1",
     "graphql": "^14.0.2"
