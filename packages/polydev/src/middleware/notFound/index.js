@@ -34,7 +34,7 @@ module.exports = express()
       res.status(404).send(`
         <head>
           <link href="https://fonts.googleapis.com/css?family=Quicksand:300,500" rel="stylesheet">
-          <link href="/styles.css" rel="stylesheet">
+          <link href="/_polydev/styles.css" rel="stylesheet">
         </head>
         <body class="error">
 

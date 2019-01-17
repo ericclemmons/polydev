@@ -14,7 +14,7 @@ export default class NextExample extends Component {
             href="https://fonts.googleapis.com/css?family=Quicksand:300,500"
             rel="stylesheet"
           />
-          <link href="/styles.css" rel="stylesheet" />
+          <link href="/_polydev/styles.css" rel="stylesheet" />
         </Head>
 
         <div id="splash" />
