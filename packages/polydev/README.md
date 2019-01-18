@@ -51,7 +51,7 @@ The `routes` folder is similar to Old-Time&trade; HTML & PHP, where
 
   - `page/[id]/index.js`
 
-    _Has access to `req.params.id`_ for <a href="http://localhost:3000/page/123">/page/123</a>.\_
+    _Has access to `req.params.id` for [/page/123](http://localhost:3000/page/123)._
 
   - `contact-us/`
 
@@ -60,11 +60,11 @@ The `routes` folder is similar to Old-Time&trade; HTML & PHP, where
 
   - `posts/index.*.js`
 
-    _Responds to both `GET` & `POST` for <a href="http://localhost:3000/posts/*">/posts/\*</a>._
+    _Responds to both `GET` & `POST` for [/posts/\*](http://localhost:3000/posts)._
 
   - `index.js`
 
-    _Responds to both `GET` & `POST` for <a href="http://localhost:3000/">/</a>._
+    _Responds to both `GET` & `POST` for [/](http://localhost:3000/)._
 
 ### Route Handlers
 
