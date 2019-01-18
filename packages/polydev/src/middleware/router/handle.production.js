@@ -5,6 +5,15 @@ module.exports = async function handle(router, file, routes) {
     routes.map(async ([httpMethod, route]) => {
       const method = httpMethod.toLowerCase()
       const exported = require(file)
+
+      if (!exported) {
+        return debug(
+          `Route %o does not have an exported handler from %o`,
+          route,
+          file.replace(process.cwd(), ".")
+        )
+      }
+
       const handler = await (exported.default || exported)
 
       debug(`router.${method}(%o, %o)`, route, file.replace(process.cwd(), "."))
