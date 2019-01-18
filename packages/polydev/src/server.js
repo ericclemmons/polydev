@@ -1,10 +1,8 @@
 const express = require("express")
 const opn = require("opn")
-const path = require("path")
 
-const { assets, error, notFound, router } = require("./middleware")
-
-const { NODE_ENV = "development", PORT = 3000 } = process.env
+const { polydev } = require(".")
+const { PORT = 3000 } = process.env
 
 process.on("uncaughtException", (error) => {
   // TODO Youch
@@ -18,15 +16,7 @@ process.on("unhandledRejection", (error) => {
 
 const proxy = express()
 
-proxy.use(assets("public"))
-proxy.use(router("routes"))
-
-// TODO Merge 404 & errors together
-if (NODE_ENV === "development") {
-  proxy.use("/_polydev", assets(path.resolve(__dirname, "./public")))
-  proxy.use(notFound)
-  proxy.use(error)
-}
+proxy.use(polydev())
 
 const server = proxy.listen(PORT, () => {
   const url = `http://localhost:${server.address().port}/`
