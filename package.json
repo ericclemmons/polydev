@@ -3,9 +3,12 @@
   "scripts": {
     "postinstall": "yarn workspace polydev link",
     "dev": "DEBUG=polydev polydev",
+    "dev:server": "DEBUG=polydev node server",
     "release": "cd packages/polydev && npx np --yolo",
     "prestart": "yarn workspace next-example build",
-    "start": "NODE_ENV=production polydev"
+    "prestart:server": "yarn workspace next-example build",
+    "start": "NODE_ENV=production polydev",
+    "start:server": "NODE_ENV=production node server"
   },
   "workspaces": ["packages/*"]
 }
