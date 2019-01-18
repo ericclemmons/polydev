@@ -5,17 +5,24 @@ module.exports = (req, res) => {
       <link href="/_polydev/styles.css" rel="stylesheet">
 
       <style>
+        * {
+          box-sizing: border-box;
+        }
+
         #splash {
           animation: none;
-          height: 100%;
+          border-radius: 5px;
+          box-shadow: 0 1em 3em rgba(0, 0, 0, 0.1), 0 0.5em 1.5em rgba(0, 0, 0, 0.1);
+          height: calc(100% - 6em);
           position: absolute;
-          width: 100%;
+          width: calc(100% - 6em);
+          margin: 3em;
         }
 
         body {
           background: transparent;
           height: calc(898px / 16 * 9);
-          margin: auto;
+          margin: 3em;
           overflow: hidden;
           position: relative;
           width: 898px;
