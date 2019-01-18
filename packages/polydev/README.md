@@ -3,6 +3,8 @@
 > Faster, route-centric development for [Node.js][node] apps with built-in
 > [Hot Module Replacement][hmr].
 
+![Demo GIF](/polydev.gif)
+
 ## Rationale
 
 As your project grows, **working on a large or monolithic [Node.js][node] app gets slower**:
