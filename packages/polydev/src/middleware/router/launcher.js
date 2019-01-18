@@ -23,7 +23,7 @@ const routes = JSON.parse(routesString)
 async function startHandler() {
   const getLatestHandler = async () => {
     const exported = require(handlerPath)
-    const handler = await (exported.default || exported)
+    const handler = exported ? await (exported.default || exported) : exported
 
     return handler
   }
@@ -82,8 +82,10 @@ async function startHandler() {
       `${handlerPath.replace(
         process.cwd(),
         "."
-      )} does not return a Function or a Server`
+      )} does not return a Function, Server, or path to package.json`
     )
+    // In development, at least listen on PORT so that we can 404
+    express().listen(PORT)
   }
 
   process.on("message", bridge(PORT))

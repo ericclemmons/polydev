@@ -26,6 +26,9 @@ module.exports = (req, res) => {
               <a href="/apollo-server">Apollo Server</a>
             </li>
             <li>
+              <a href="/dev-only">Development-Only Page</a>
+            </li>
+            <li>
               <a href="/express">Express</a>
             </li>
             <li>
