@@ -2,8 +2,8 @@
 
 > Faster, route-centric development for [Node.js][node] apps with built-in
 > [Hot Module Replacement][hmr].
-
-![Demo GIF](/polydev.gif)
+>
+> ![Demo GIF](/polydev.gif)
 
 ## Rationale
 
