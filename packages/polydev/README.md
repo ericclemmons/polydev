@@ -42,7 +42,7 @@ As your project grows, **working on a large or monolithic [Node.js][node] app ge
    yarn run polydev --open
    ```
 
-## Definining `routes`
+## Defining `routes`
 
 The `routes` folder is similar to Old-Time&trade; HTML & PHP, where
 **folders mirror the URL structure**, followed by an `index.js` file:
