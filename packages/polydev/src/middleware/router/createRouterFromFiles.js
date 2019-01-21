@@ -4,7 +4,7 @@ const path = require("path")
 const handle = require("./handle")
 
 // Match index[.*|get|post].js
-const REGEXP_INDEX = /^index(?:\.(\*|get|post))?\.js$/
+const REGEXP_INDEX = /^index(?:\.(\*|get|post))?\.(?:j|t)s$/
 const REGEXP_PARAM = /\[([a-zA-Z0-9-]+)\]/g
 const REGEXP_PARAM_REPLACE = ":$1"
 const REGEXP_TRAILING_SLASH = /\/+$/

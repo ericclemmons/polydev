@@ -46,6 +46,9 @@ module.exports = (req, res) => {
             <li>
               <a href="/sse">Server-Sent Events (SSE)</a>
             </li>
+            <li>
+              <a href="/typescript">TypeScript</a>
+            </li>
           </ul>
         </main>
       </section>
