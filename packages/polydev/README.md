@@ -42,6 +42,14 @@ As your project grows, **working on a large or monolithic [Node.js][node] app ge
    yarn run polydev --open
    ```
 
+For customizing the `node` runtime, you can use `NODE_OPTIONS`.
+
+For example, [TypeScript][typescript] can be enabled via [ts-node][ts-node]:
+
+```shell
+NODE_OPTIONS="--require ts-node/register" polydev
+```
+
 ## Defining `routes`
 
 The `routes` folder is similar to Old-Time&trade; HTML & PHP, where
@@ -110,7 +118,7 @@ Route handlers can be any of the following:
 - [ ] [Loading screen, for slow routes](/../../issues/2)
 - [ ] [Option to install missing modules](/../../issues/3)
 - [ ] [ESM support](/../../issues/4)
-- [ ] [TypeScript support](/../../issues/5)
+- [x] [TypeScript support](/../../issues/5)
 - [ ] [Better errors for broken routes/modules](/../../issues/6)
 - [ ] [Storybook example](/../../issues/7)
 - [ ] [View All][issues]
@@ -131,5 +139,7 @@ Route handlers can be any of the following:
 [nodemon]: https://github.com/remy/nodemon
 [piping]: https://www.npmjs.com/package/piping
 [storybook]: https://github.com/storybooks/storybook
+[ts-node]: https://github.com/TypeStrong/ts-node
+[typescript]: https://www.typescriptlang.org/
 [twitter]: https://twitter.com/ericclemmons
 [workspaces]: https://yarnpkg.com/en/docs/workspaces
