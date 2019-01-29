@@ -31,10 +31,12 @@ async function startHandler() {
   // Next.js returns a Promise for when the server is ready
   let handler = await getLatestHandler()
 
+  // @ts-ignore
   if (module.hot) {
     let recentlySaved = false
 
     if (typeof handler === "function") {
+      // @ts-ignore
       module.hot.accept(handlerPath, async () => {
         if (recentlySaved) {
           console.log(`♻️  Restarting ${handlerPath}`)
