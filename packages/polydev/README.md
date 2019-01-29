@@ -47,6 +47,8 @@ For customizing the `node` runtime, you can use `NODE_OPTIONS`.
 For example, [TypeScript][typescript] can be enabled via [ts-node][ts-node]:
 
 ```shell
+polydev --require ts-node/register
+# Or
 NODE_OPTIONS="--require ts-node/register" polydev
 ```
 
