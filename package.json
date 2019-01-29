@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "postinstall": "yarn workspace polydev link",
-    "dev": "DEBUG=polydev polydev",
+    "dev": "DEBUG=polydev polydev -r ts-node/register",
     "dev:server": "DEBUG=polydev node server",
     "release": "cd packages/polydev && npx np --yolo",
     "prestart": "yarn workspace next-example build",

@@ -1,3 +1,15 @@
 #!/usr/bin/env node
 
-require("../src/server")
+const child_process = require("child_process")
+const path = require("path")
+
+const serverPath = path.resolve(__dirname, "../src/server.js")
+const [, , ...args] = process.argv
+
+// Remove polydev custom flags
+const execArgv = args.filter(arg => !["--open"].includes(arg))
+
+// Spawn server via node + flags
+child_process.fork(serverPath, args, {
+  execArgv
+})
