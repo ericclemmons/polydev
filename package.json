@@ -1,6 +1,8 @@
 {
+  "repository": "git@github.com:ericclemmons/polydev.git",
   "private": true,
   "scripts": {
+    "changelog": "lerna-changelog",
     "clean": "lerna clean",
     "install": "lerna bootstrap",
     "postinstall": "yarn workspace polydev link",
@@ -16,6 +18,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "lerna": "^3.10.7"
+    "lerna": "^3.10.7",
+    "lerna-changelog": "^0.8.2"
   }
 }
