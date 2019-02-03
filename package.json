@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "clean": "lerna clean",
     "install": "lerna bootstrap",
     "postinstall": "yarn workspace polydev link",
     "dev": "DEBUG=polydev polydev -r ts-node/register",
