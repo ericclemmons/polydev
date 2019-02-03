@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "install": "lerna bootstrap",
     "postinstall": "yarn workspace polydev link",
     "dev": "DEBUG=polydev polydev -r ts-node/register",
     "dev:server": "DEBUG=polydev node server",
@@ -10,5 +11,10 @@
     "start": "NODE_ENV=production polydev",
     "start:server": "NODE_ENV=production node server"
   },
-  "workspaces": ["packages/*"]
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^3.10.7"
+  }
 }
