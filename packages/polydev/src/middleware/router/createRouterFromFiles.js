@@ -42,9 +42,9 @@ module.exports = function createRouterFromFiles(routesPath, files) {
       case "*":
         handle(router, file, [
           ["GET", route],
-          ["GET", `${route}/*`],
+          ["GET", path.join(route, "*")],
           ["POST", route],
-          ["POST", `${route}/*`]
+          ["POST", path.join(route, "*")]
         ])
         break
 
