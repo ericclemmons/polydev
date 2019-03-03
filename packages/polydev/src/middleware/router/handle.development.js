@@ -106,7 +106,14 @@ module.exports = function handle(router, file, routes) {
       router,
       route,
       // Make sure we always evaluate at run-time for the latest HMR'd handler
-      (req, res) => handler(req, res)
+      (req, res, next) => {
+        const handled = handler(req, res, next)
+
+        // Automatically bubble up async errors
+        if (handled.catch) {
+          handled.catch(next)
+        }
+      }
     )
   })
 }
