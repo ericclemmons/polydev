@@ -74,7 +74,7 @@ async function startHandler() {
           const handled = handler(req, res, next)
 
           // Automatically bubble up async errors
-          if (handled.catch) {
+          if (handled && handled.catch) {
             handled.catch(next)
           }
         }

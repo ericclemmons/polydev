@@ -110,7 +110,7 @@ module.exports = function handle(router, file, routes) {
         const handled = handler(req, res, next)
 
         // Automatically bubble up async errors
-        if (handled.catch) {
+        if (handled && handled.catch) {
           handled.catch(next)
         }
       }
