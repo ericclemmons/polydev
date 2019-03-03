@@ -38,6 +38,9 @@ module.exports = (req, res) => {
               <a href="/logo">Logo</a>
             </li>
             <li>
+              <a href="/missing-module">Missing Module</a>
+            </li>
+            <li>
               <a href="/next">Next.js</a>
             </li>
             <li>
