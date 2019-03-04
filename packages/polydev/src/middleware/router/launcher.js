@@ -47,13 +47,12 @@ async function startHandler() {
   if (module.hot) {
     let recentlySaved = false
 
-    if (typeof handler === "function") {
-      // @ts-ignore
-      module.hot.accept(handlerPath, async () => {
-        if (recentlySaved) {
-          console.log(`♻️  Restarting ${handlerPath}`)
-          return process.send("restart")
-        }
+    // @ts-ignore
+    module.hot.accept(handlerPath, async () => {
+      if (recentlySaved) {
+        console.log(`♻️  Restarting ${handlerPath}`)
+        return process.send("restart")
+      }
 
         handler = await getLatestHandler()
         console.log(`🔁  Hot-reloaded ${handlerPath}`)
@@ -65,9 +64,8 @@ async function startHandler() {
         // Outside of double-save reload window
         setTimeout(() => {
           recentlySaved = false
-        }, 500)
-      })
-    }
+      }, 500)
+    })
   }
 
   const url = `http://localhost:${PORT}/`
