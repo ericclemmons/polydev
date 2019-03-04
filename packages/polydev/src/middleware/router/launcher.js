@@ -57,16 +57,16 @@ async function startHandler() {
         return process.send("restart")
       }
 
-        handler = await getLatestHandler()
-        console.log(`🔁  Hot-reloaded ${handlerPath}`)
+      handler = await getLatestHandler()
+      console.log(`🔁  Hot-reloaded ${handlerPath}`)
 
-        // TODO Send reload signal
+      // TODO Send reload signal
 
-        // Wait for a double-save
-        recentlySaved = true
-        // Outside of double-save reload window
-        setTimeout(() => {
-          recentlySaved = false
+      // Wait for a double-save
+      recentlySaved = true
+      // Outside of double-save reload window
+      setTimeout(() => {
+        recentlySaved = false
       }, 500)
     })
   }
@@ -86,12 +86,16 @@ async function startHandler() {
         route,
         // Make sure we always evaluate at run-time for the latest HMR'd handler
         function handleRoute(req, res, next) {
-          const handled = handler(req, res, next)
+          getLatestHandler()
+            .then((handler) => {
+              const handled = handler(req, res, next)
 
-          // Automatically bubble up async errors
-          if (handled && handled.catch) {
-            handled.catch(next)
-          }
+              // Automatically bubble up async errors
+              if (handled && handled.catch) {
+                handled.catch(next)
+              }
+            })
+            .catch(next)
         }
       )
     })
