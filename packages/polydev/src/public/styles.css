@@ -74,14 +74,35 @@
         overflow: auto;
       }
 
-      section.error-page .fab {
-        color: #455275;
+      section.error-page .fab,
+      section.error-page button {
         background: rgb(250, 250, 250);
         border: 1px solid white;
         border-radius: 100em;
         box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.2);
+        color: #455275;
+        cursor: pointer;
         margin-right: 0.5rem;
         padding: 0.5rem 1rem;
+        transition: all 200ms;
+      }
+
+      section.error-page .fab:hover,
+      section.error-page button:hover {
+        background: white;
+        border-color: #455275;
+        box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.3);
+      }
+
+      section.error-page form {
+        background: rgb(250, 250, 250, 0.5);
+        border-radius: 3px;
+        margin-bottom: 2rem;
+        padding: 1rem;
+      }
+
+      section.error-page form h3 {
+        margin-bottom: 1rem;
       }
 
       section.error-stack {
@@ -116,4 +137,25 @@
         display: inline-block;
         padding: 3px 5px;
         vertical-align: middle;
+      }
+
+      hr {
+        background: rgba(0, 0, 0, 0.05);
+        height: 1px;
+        border: 0;
+        margin: 1rem 0;
+      }
+
+      pre {
+        animation: fadein 2s;
+        background: #222;
+        border-radius: 3px;
+        color: #fff;
+        font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+        font-size: 13px;
+        height: 25ch;
+        line-height: 20px;
+        padding: 1rem;
+        overflow: auto;
+        width: 80ch;
       }

@@ -11,7 +11,6 @@
     "src"
   ],
   "dependencies": {
-    "body-parser": "^1.18.3",
     "chokidar": "^2.0.4",
     "debug": "^4.1.1",
     "express": "^4.16.4",
@@ -20,6 +19,7 @@
     "hot-replacement-module": "https://github.com/ericclemmons/hot-module-replacement.git",
     "opn": "^5.4.0",
     "raw-body": "^2.3.3",
+    "stream-ansi2html": "^1.1.0",
     "uuid": "^3.3.2",
     "wait-on": "^3.2.0",
     "youch": "^2.0.10",

@@ -21,6 +21,12 @@ const [, , handlerPath, routesString] = process.argv
 // Expected to be JSON.stringify([["GET", "/"]])
 const routes = JSON.parse(routesString)
 
+const verify = (req, res, buffer, encoding = "utf8") => {
+  if (buffer && buffer.length) {
+    req.rawBody = buffer.toString(encoding)
+  }
+}
+
 // TODO Remove baseUrl unless it's needed in the route
 async function startHandler() {
   const getLatestHandler = async () => {
@@ -64,6 +70,10 @@ async function startHandler() {
 
   if (typeof handler === "function") {
     const app = express()
+
+    // req.body is needed
+    app.use(express.urlencoded({ extended: true, verify }))
+    app.use(express.json({ verify }))
 
     routes.forEach(([method, route]) => {
       app[method.toLowerCase()].call(

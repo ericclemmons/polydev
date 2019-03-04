@@ -1,4 +1,3 @@
-const bodyParser = require("body-parser")
 const express = require("express")
 const jetpack = require("fs-jetpack")
 const opn = require("opn")
@@ -9,10 +8,6 @@ const waitOn = require("wait-on")
 const nonce = generateId()
 
 module.exports = express()
-  // req.body is needed
-  .use(bodyParser.urlencoded({ extended: false }))
-  .use(bodyParser.json())
-
   // This handler only responds to GET/POST, not HEAD/OPTIONS/etc.
   .use(
     function onlyGetPost(req, res, next) {

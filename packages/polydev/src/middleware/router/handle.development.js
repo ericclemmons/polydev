@@ -84,8 +84,7 @@ module.exports = function handle(router, file, routes) {
     }
 
     const event = {
-      // TODO Replace with body-parser
-      body: (await rawBody(req)).toString("utf8"),
+      body: req.rawBody,
       headers: req.headers,
       host: req.headers.host,
       method: req.method,
