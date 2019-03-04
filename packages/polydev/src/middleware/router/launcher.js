@@ -37,7 +37,11 @@ async function startHandler() {
   }
 
   // Next.js returns a Promise for when the server is ready
-  let handler = await getLatestHandler()
+  let handler = await getLatestHandler().catch((error) => {
+    return function invalidHandler(req, res, next) {
+      next(error)
+    }
+  })
 
   // @ts-ignore
   if (module.hot) {
