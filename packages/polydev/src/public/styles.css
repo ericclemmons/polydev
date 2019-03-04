@@ -75,7 +75,7 @@
       }
 
       section.error-page .fab,
-      section.error-page button {
+      button {
         background: rgb(250, 250, 250);
         border: 1px solid white;
         border-radius: 100em;
