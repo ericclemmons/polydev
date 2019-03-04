@@ -1,5 +1,13 @@
-const ansi2html = require("stream-ansi2html")
+const Convert = require("ansi-to-html")
 const { spawn } = require("child_process")
+
+const convert = new Convert({
+  fg: "#eee",
+  bg: "#222",
+  newline: false,
+  escapeXML: true,
+  stream: true
+})
 
 module.exports = (req, res) => {
   if (!req.body.module) {
@@ -39,8 +47,8 @@ module.exports = (req, res) => {
 
   res.write(`$ yarn ${args.join(" ")}\n`)
 
-  child.stdout.pipe(ansi2html()).pipe(res)
-  child.stderr.pipe(ansi2html()).pipe(res)
+  child.stderr.on("data", (data) => res.write(convert.toHtml(`${data}`)))
+  child.stdout.on("data", (data) => res.write(convert.toHtml(`${data}`)))
 
   child.on("close", (code, signal) => {
     if (!code) {
