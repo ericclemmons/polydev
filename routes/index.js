@@ -29,6 +29,9 @@ module.exports = (req, res) => {
               <a href="/dev-only">Development-Only Page</a>
             </li>
             <li>
+              <a href="/docz">Docz</a>
+            </li>
+            <li>
               <a href="/express">Express</a>
             </li>
             <li>
