@@ -1,32 +1,73 @@
+const generateId = require("uuid/v1")
+const Youch = require("youch")
+const forTerminal = require("youch-terminal")
+
+const nonce = generateId()
+
 module.exports = function errorHandler(error, req, res, next) {
   const { status = "", statusCode = 500 } = error
 
-  res.status(statusCode).send(`
-    <body class="error">
-      <link href="https://fonts.googleapis.com/css?family=Quicksand:300,500" rel="stylesheet">
+  const youch = new Youch(error, req)
+
+  youch.addLink((error) => {
+    return `
       <link href="/_polydev/styles.css" rel="stylesheet">
-
       <div id="splash"></div>
+    `
+  })
 
-      <section>
-        <main>
-          <h1>
-            <code>${statusCode}</code> ${status}
-          </h1>
+  if (error.code === "MODULE_NOT_FOUND") {
+    const [, missing] = error.message.match(/'(.*)'/)
 
-          <pre><code>${error.message}</code></pre>
-        </main>
+    youch.addLink(
+      () => `
+      <form action="/_polydev/install-module" method="post">
+        <input name="nonce" type="hidden" value="${nonce}" />
+        <input name="path" type="hidden" value="${req.path}" />
+        <input name="module" type="hidden" value="${missing}" />
 
-        ${
-          error.stack
-            ? `
-        <footer>
-          <pre><code>${error.stack}</code></pre>
-        </footer>
-        `
-            : ""
-        }
-      </section>
-    </body>
-  `)
+        <h3>
+          Would you like to install <kbd>${missing}</kbd>?
+        </h3>
+
+        <img src="https://img.shields.io/npm/v/${missing}.svg" />
+        <img src="https://img.shields.io/npm/dm/${missing}.svg" />
+
+        <hr />
+
+        <button type="submit">
+          <code>yarn add ${missing}</code>
+        </button>
+
+        <label>
+          <input name="dev" type="checkbox" value="true" />
+          <code>devDependency</code>
+        </label>
+      </form>
+    `
+    )
+  }
+
+  youch.addLink(({ message }) => {
+    const url = `https://google.com/search?q=${encodeURIComponent(message)}`
+
+    return `<a href="${url}" target="_blank" title="Search Google"><i class="fab fa-google"></i></a>`
+  })
+
+  youch.addLink(({ message }) => {
+    const url = `https://stackoverflow.com/search?q=${encodeURIComponent(
+      message
+    )}`
+
+    return `<a href="${url}" target="_blank" title="Search Stack Overflow"><i class="fab fa-stack-overflow"></i></a>`
+  })
+
+  youch.toHTML().then((html) => {
+    res.status(statusCode).send(html)
+  })
+
+  youch
+    .toJSON()
+    .then(forTerminal)
+    .then(console.log)
 }

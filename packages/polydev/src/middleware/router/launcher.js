@@ -21,9 +21,18 @@ const [, , handlerPath, routesString] = process.argv
 // Expected to be JSON.stringify([["GET", "/"]])
 const routes = JSON.parse(routesString)
 
+const verify = (req, res, buffer, encoding = "utf8") => {
+  if (buffer && buffer.length) {
+    req.rawBody = buffer.toString(encoding)
+  }
+}
+
 // TODO Remove baseUrl unless it's needed in the route
 async function startHandler() {
   const getLatestHandler = async () => {
+    // Best way to ensure that HMR doesn't save old copies
+    delete require.cache[handlerPath]
+
     const exported = require(handlerPath)
     const handler = exported ? await (exported.default || exported) : exported
 
@@ -31,33 +40,35 @@ async function startHandler() {
   }
 
   // Next.js returns a Promise for when the server is ready
-  let handler = await getLatestHandler()
+  let handler = await getLatestHandler().catch((error) => {
+    return function invalidHandler(req, res, next) {
+      next(error)
+    }
+  })
 
   // @ts-ignore
   if (module.hot) {
     let recentlySaved = false
 
-    if (typeof handler === "function") {
-      // @ts-ignore
-      module.hot.accept(handlerPath, async () => {
-        if (recentlySaved) {
-          console.log(`♻️  Restarting ${handlerPath}`)
-          return process.send("restart")
-        }
+    // @ts-ignore
+    module.hot.accept(handlerPath, async () => {
+      if (recentlySaved) {
+        console.log(`♻️  Restarting ${handlerPath}`)
+        return process.send("restart")
+      }
 
-        handler = await getLatestHandler()
-        console.log(`🔁  Hot-reloaded ${handlerPath}`)
+      handler = await getLatestHandler()
+      console.log(`🔁  Hot-reloaded ${handlerPath}`)
 
-        // TODO Send reload signal
+      // TODO Send reload signal
 
-        // Wait for a double-save
-        recentlySaved = true
-        // Outside of double-save reload window
-        setTimeout(() => {
-          recentlySaved = false
-        }, 500)
-      })
-    }
+      // Wait for a double-save
+      recentlySaved = true
+      // Outside of double-save reload window
+      setTimeout(() => {
+        recentlySaved = false
+      }, 500)
+    })
   }
 
   const url = `http://localhost:${PORT}/`
@@ -65,18 +76,26 @@ async function startHandler() {
   if (typeof handler === "function") {
     const app = express()
 
+    // req.body is needed
+    app.use(express.urlencoded({ extended: true, verify }))
+    app.use(express.json({ verify }))
+
     routes.forEach(([method, route]) => {
       app[method.toLowerCase()].call(
         app,
         route,
         // Make sure we always evaluate at run-time for the latest HMR'd handler
-        (req, res, next) => {
-          const handled = handler(req, res, next)
+        function handleRoute(req, res, next) {
+          getLatestHandler()
+            .then((handler) => {
+              const handled = handler(req, res, next)
 
-          // Automatically bubble up async errors
-          if (handled.catch) {
-            handled.catch(next)
-          }
+              // Automatically bubble up async errors
+              if (handled && handled.catch) {
+                handled.catch(next)
+              }
+            })
+            .catch(next)
         }
       )
     })
