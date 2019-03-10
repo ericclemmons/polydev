@@ -1,3 +1,3 @@
-module.exports = async (req, res) => {
+module.exports = (req, res) => {
   throw new Error("💥 Whoopsiedoodle! 🤷‍♂️ ")
 }
