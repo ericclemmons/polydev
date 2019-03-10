@@ -4,5 +4,9 @@
   "version": "0.0.0",
   "dependencies": {
     "express": "^4.16.4"
+  },
+  "scripts": {
+    "dev": "polydev",
+    "start": "NODE_ENV=production polydev"
   }
 }
