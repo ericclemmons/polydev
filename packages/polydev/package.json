@@ -23,6 +23,7 @@
     "strip-ansi": "^5.1.0",
     "uuid": "^3.3.2",
     "wait-on": "^3.2.0",
+    "wait-port": "^0.2.2",
     "youch": "^2.0.10",
     "youch-terminal": "^1.0.0"
   }

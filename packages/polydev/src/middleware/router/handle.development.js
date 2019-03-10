@@ -3,6 +3,7 @@ const debug = require("debug")("polydev")
 const path = require("path")
 const generateId = require("uuid/v1")
 const waitOn = require("wait-on")
+const waitPort = require("wait-port")
 
 const findAvailablePort = require("./findAvailablePort")
 
@@ -31,7 +32,7 @@ module.exports = function handle(router, file, routes) {
       // Some things have a build step like Next and aren't ready yet.
       // TODO This takes ~1-1.5s every time, but I don't know why.
       // This can be removed & work for most examples _except_ next.
-      await waitOn({ interval: 10, resources: [`tcp:${env.PORT}`] }, undefined)
+      await waitPort({ interval: 50, output: "silent", port: env.PORT })
 
       child.on("message", (message) => {
         if (message === "restart") {
