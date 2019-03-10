@@ -29,7 +29,20 @@ module.exports = function errorHandler(error, req, res, next) {
   }
 
   if (error.message.includes("TS2307")) {
-    missing = error.message.match(/TS2307: Cannot find module '(.*)'/)[1]
+    missing = error.message.match(/TS2307: Cannot find module '(.*?)'/)[1]
+  }
+
+  if (error.message.includes("TS7016")) {
+    missing = error.message.match(
+      /TS7016: Could not find a declaration file for module '(.*?)'/
+    )[1]
+
+    // Rename @feathersjs/express to @types/feathersjs__express
+    if (missing.startsWith("@")) {
+      missing = missing.slice(1).replace("/", "__")
+    }
+
+    missing = `@types/${missing}`
   }
 
   if (missing) {
