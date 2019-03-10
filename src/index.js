@@ -19,12 +19,16 @@ module.exports.polydev = (options = {}) => {
   app.use(express.urlencoded({ extended: true, verify }))
   app.use(express.json({ verify }))
 
+  // Ensure polydev assets can be referenced for demos
+  if (NODE_ENV === "development") {
+    app.use("/_polydev", middleware.assets(path.resolve(__dirname, "./public")))
+  }
+
   app.use(middleware.assets(assets))
   app.use(middleware.router(routes))
 
   // TODO Merge 404 & errors together
   if (NODE_ENV === "development") {
-    app.use("/_polydev", middleware.assets(path.resolve(__dirname, "./public")))
     app.use(middleware.router(path.resolve(__dirname, "./routes")))
     app.use(middleware.notFound)
     app.use(middleware.error)
