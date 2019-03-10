@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "name": "next-example",
+  "version": "0.0.0",
+  "dependencies": {
+    "next": "^7.0.2",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0"
+  },
+  "scripts": {
+    "dev": "polydev",
+    "prestart": "next build",
+    "start": "NODE_ENV=production polydev"
+  }
+}

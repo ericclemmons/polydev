@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "logo-example",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "polydev",
+    "start": "NODE_ENV=production polydev"
+  }
+}

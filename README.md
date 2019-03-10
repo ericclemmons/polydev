@@ -114,17 +114,6 @@ Route handlers can be any of the following:
 
    This is good for when you want to have a separate API server open on `process.env.PORT` that's not part of your application.
 
-## Roadmap
-
-- [ ] [Reload browser on double-save](/../../issues/1)
-- [ ] [Loading screen, for slow routes](/../../issues/2)
-- [ ] [Option to install missing modules](/../../issues/3)
-- [ ] [ESM support](/../../issues/4)
-- [x] [TypeScript support](/../../issues/5)
-- [ ] [Better errors for broken routes/modules](/../../issues/6)
-- [ ] [Storybook example](/../../issues/7)
-- [ ] [View All][issues]
-
 ## Contributing
 
 > See [CONTRIBUTING.md](/CONTRIBUTING.md).

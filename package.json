@@ -1,14 +1,39 @@
 {
-  "private": true,
+  "name": "polydev",
+  "version": "1.5.0",
+  "bin": "./bin/polydev",
+  "main": "./src/index.js",
+  "repository": "git@github.com:ericclemmons/polydev.git",
+  "author": "Eric Clemmons <eric@smarterspam.com>",
+  "license": "MIT",
+  "files": [
+    "bin",
+    "src"
+  ],
   "scripts": {
-    "postinstall": "yarn workspace polydev link",
-    "dev": "DEBUG=polydev polydev -r ts-node/register",
-    "dev:server": "DEBUG=polydev node server",
-    "release": "cd packages/polydev && npx np --yolo",
-    "prestart": "yarn workspace next-example build",
-    "prestart:server": "yarn workspace next-example build",
-    "start": "NODE_ENV=production polydev",
-    "start:server": "NODE_ENV=production node server"
+    "dev": "./scripts/dev.js",
+    "start": "./scripts/start.js",
+    "postinstall": "yarn link",
+    "release": "np --yolo"
   },
-  "workspaces": ["packages/*"]
+  "dependencies": {
+    "ansi-to-html": "^0.6.10",
+    "chokidar": "^2.0.4",
+    "common-tags": "^1.8.0",
+    "debug": "^4.1.1",
+    "express": "^4.16.4",
+    "fs-jetpack": "^2.2.0",
+    "hot-module-replacement": "^3.0.3",
+    "hot-replacement-module": "https://github.com/ericclemmons/hot-module-replacement.git",
+    "opn": "^5.4.0",
+    "strip-ansi": "^5.1.0",
+    "uuid": "^3.3.2",
+    "wait-on": "^3.2.0",
+    "wait-port": "^0.2.2",
+    "youch": "^2.0.10",
+    "youch-terminal": "^1.0.0"
+  },
+  "devDependencies": {
+    "np": "^4.0.2"
+  }
 }

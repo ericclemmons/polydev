@@ -1,9 +1,0 @@
-{
-  "private": true,
-  "name": "sse-example",
-  "version": "0.0.0",
-  "dependencies": {
-    "@toverux/expresse": "^2.4.0",
-    "express": "^4.16.4"
-  }
-}

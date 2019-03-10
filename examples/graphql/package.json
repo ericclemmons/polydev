@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "name": "graphql-example",
+  "version": "0.0.0",
+  "dependencies": {
+    "express-graphql": "^0.7.1",
+    "graphql": "^14.0.2",
+    "graphql-tools": "^4.0.3"
+  },
+  "scripts": {
+    "dev": "polydev",
+    "start": "NODE_ENV=production polydev"
+  }
+}

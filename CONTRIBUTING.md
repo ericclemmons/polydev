@@ -9,15 +9,13 @@
 
    _(This will install the `polydev` binary globally.)_
 
-1. `yarn dev`
+1. `yarn dev EXAMPLE_NAME`
 
 _(This is for "development" mode)_
 
-1. `yarn start`
+1. `yarn start EXAMPLE_NAME`
 
 _(This is for "production" mode)_
-
-This project is a living example of how to use Polydev!
 
 ## How to Publish
 

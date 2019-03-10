@@ -1,3 +1,4 @@
 .next
+examples/**/*.lock
 dist
 node_modules

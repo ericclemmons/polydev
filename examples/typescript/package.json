@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "name": "typescript-example",
+  "version": "0.0.0",
+  "devDependencies": {
+    "ts-node": "^8.0.3",
+    "typescript": "^3.3.3333"
+  },
+  "scripts": {
+    "dev": "polydev --require ts-node/register",
+    "prestart": "tsc",
+    "start": "cd dist && NODE_ENV=production polydev"
+  },
+  "dependencies": {
+    "@types/express": "^4.16.1",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
+  }
+}
