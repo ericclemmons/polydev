@@ -45,7 +45,7 @@ module.exports = function errorHandler(error, req, res, next) {
     missing = `@types/${missing}`
   }
 
-  if (missing) {
+  if (missing && !missing.startsWith(".")) {
     missing = missing
       .split("/")
       .slice(0, missing.startsWith("@") ? 2 : 1)
