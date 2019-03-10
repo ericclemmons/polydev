@@ -1,4 +1,4 @@
-const humanize = require("humanize")
+const THIS_PACKAGE_WONT_EXIST = require("THIS_PACKAGE_WONT_EXIST")
 
 module.exports = (req, res) => {
   res.send(`
