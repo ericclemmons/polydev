@@ -22,8 +22,17 @@ module.exports = function errorHandler(error, req, res, next) {
     `
   })
 
+  let missing
+
   if (error.code === "MODULE_NOT_FOUND") {
-    const [, missing] = error.message.match(/'(.*)'/)
+    missing = error.message.match(/'(.*)'/)[1]
+  }
+
+  if (missing) {
+    missing = missing
+      .split("/")
+      .slice(0, missing.startsWith("@") ? 2 : 1)
+      .join("/")
 
     youch.addLink(
       () => `
