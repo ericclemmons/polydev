@@ -11,6 +11,8 @@
     "src"
   ],
   "scripts": {
+    "dev": "./scripts/dev.js",
+    "start": "./scripts/start.js",
     "postinstall": "yarn link",
     "release": "np --yolo"
   },
@@ -32,6 +34,7 @@
     "youch-terminal": "^1.0.0"
   },
   "devDependencies": {
-    "np": "^4.0.2"
+    "np": "^4.0.2",
+    "shelljs": "^0.8.3"
   }
 }
