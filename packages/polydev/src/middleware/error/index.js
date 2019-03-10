@@ -28,6 +28,10 @@ module.exports = function errorHandler(error, req, res, next) {
     missing = error.message.match(/'(.*)'/)[1]
   }
 
+  if (error.message.includes("TS2307")) {
+    missing = error.message.match(/TS2307: Cannot find module '(.*)'/)[1]
+  }
+
   if (missing) {
     missing = missing
       .split("/")

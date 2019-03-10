@@ -1,3 +1,4 @@
+const { stripIndent } = require("common-tags")
 const express = require("express")
 const jetpack = require("fs-jetpack")
 const opn = require("opn")
@@ -6,6 +7,11 @@ const generateId = require("uuid/v1")
 const waitOn = require("wait-on")
 
 const nonce = generateId()
+
+// Default the extension based on what's supporteds
+const extension = [".tsx", ".ts", ".jsx", ".js"]
+  .filter((ext) => require.extensions[ext])
+  .shift()
 
 module.exports = express()
   // This handler only responds to GET/POST, not HEAD/OPTIONS/etc.
@@ -23,7 +29,7 @@ module.exports = express()
       }
 
       const filepath = path
-        .join(process.cwd(), "routes", req.path, "index.js")
+        .join(process.cwd(), "routes", req.path, `index${extension}`)
         .replace(process.cwd(), ".")
 
       res.status(404).send(`
@@ -77,17 +83,32 @@ module.exports = express()
         )
       }
 
-      const filepath = path.join(process.cwd(), "routes", req.path, "index.js")
+      const filepath = path.join(
+        process.cwd(),
+        "routes",
+        req.path,
+        `index${extension}`
+      )
 
       if (jetpack.exists(filepath)) {
         throw new Error(`Route already exists at ${filepath}`)
       }
 
-      const content = `
-module.exports = (req, res) => {
-  res.send("📝 ${req.path}")
-}
-`.trimLeft()
+      const content = stripIndent(
+        extension.startsWith(".ts")
+          ? `
+          import { Request, Response } from "express"
+
+          export default (req: Request, res: Response) => {
+            res.send("📝 ${req.path}")
+          }
+`
+          : `
+          module.exports = (req, res) => {
+            res.send("📝 ${req.path}")
+          }
+`
+      )
 
       // Create the file exists
       jetpack.file(filepath, { content })
