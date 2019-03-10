@@ -30,9 +30,6 @@ const verify = (req, res, buffer, encoding = "utf8") => {
 // TODO Remove baseUrl unless it's needed in the route
 async function startHandler() {
   const getLatestHandler = async () => {
-    // Best way to ensure that HMR doesn't save old copies
-    delete require.cache[handlerPath]
-
     const exported = require(handlerPath)
     const handler = exported ? await (exported.default || exported) : exported
 
@@ -52,6 +49,9 @@ async function startHandler() {
 
     // @ts-ignore
     module.hot.accept(handlerPath, async () => {
+      // Best way to ensure that HMR doesn't save old copies
+      delete require.cache[handlerPath]
+
       if (recentlySaved) {
         console.log(`♻️  Restarting ${handlerPath}`)
         return process.send("restart")
