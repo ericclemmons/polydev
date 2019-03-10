@@ -5,7 +5,7 @@ const path = require("path")
 const time = () => new Date().toLocaleTimeString("en-US")
 
 module.exports = express()
-  .get("/sse", (req, res) => {
+  .get("/", (req, res) => {
     const eventUrl = path.join(req.originalUrl, "time")
 
     res.send(`
@@ -45,7 +45,7 @@ module.exports = express()
       </script>
     `)
   })
-  .get("/sse/time", sse(), (req, res) => {
+  .get("/time", sse(), (req, res) => {
     let messageId = parseInt(req.header("Last-Event-ID"), 10) || 0
 
     setInterval(() => {
