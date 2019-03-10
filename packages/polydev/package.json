@@ -1,6 +1,6 @@
 {
   "name": "polydev",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "bin": "./bin/polydev",
   "main": "./src/index.js",
   "repository": "git@github.com:ericclemmons/polydev.git",

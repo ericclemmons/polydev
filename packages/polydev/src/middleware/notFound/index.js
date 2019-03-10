@@ -1,3 +1,4 @@
+const { execSync } = require("child_process")
 const { stripIndent } = require("common-tags")
 const express = require("express")
 const jetpack = require("fs-jetpack")
@@ -117,7 +118,7 @@ module.exports = express()
       await waitOn({ resources: [filepath] }, undefined)
 
       // Wait for the file to open
-      await opn(`vscode://file/${filepath}`, { wait: false })
+      execSync(`code . -g ${filepath}`)
 
       // Reload the requested URL
       // ! Hopefully the router has been re-created by this point!
