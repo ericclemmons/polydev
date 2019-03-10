@@ -54,6 +54,6 @@ const apollo = new ApolloServer({
 const app = express()
 
 // Mount GraphQL at the root, not `/graphql` by default
-apollo.applyMiddleware({ app, path: "/apollo-server" })
+apollo.applyMiddleware({ app, path: "/" })
 
 module.exports = app
