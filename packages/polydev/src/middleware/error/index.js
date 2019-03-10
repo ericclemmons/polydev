@@ -1,4 +1,5 @@
 const generateId = require("uuid/v1")
+const stripAnsi = require("strip-ansi")
 const Youch = require("youch")
 const forTerminal = require("youch-terminal")
 
@@ -6,6 +7,11 @@ const nonce = generateId()
 
 module.exports = function errorHandler(error, req, res, next) {
   const { status = "", statusCode = 500 } = error
+
+  error.message = stripAnsi(error.message)
+    .split("\n")
+    .slice(0, 2)
+    .join("\n")
 
   const youch = new Youch(error, req)
 

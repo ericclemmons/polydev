@@ -20,6 +20,7 @@
     "hot-replacement-module": "https://github.com/ericclemmons/hot-module-replacement.git",
     "opn": "^5.4.0",
     "raw-body": "^2.3.3",
+    "strip-ansi": "^5.1.0",
     "uuid": "^3.3.2",
     "wait-on": "^3.2.0",
     "youch": "^2.0.10",
