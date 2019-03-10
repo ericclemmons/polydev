@@ -74,6 +74,13 @@ module.exports = function handle(router, file, routes) {
             response.status(statusCode)
             response.send()
             responses.delete(uuid)
+
+            // Server error: restart for next request
+            if (statusCode === 500) {
+              handlers.get(file).kill()
+              handlers.delete(file)
+            }
+
             break
 
           default:
