@@ -8,6 +8,8 @@
     "react-dom": "^16.7.0"
   },
   "scripts": {
-    "build": "next build"
+    "dev": "polydev",
+    "prestart": "next build",
+    "start": "NODE_ENV=production polydev"
   }
 }
