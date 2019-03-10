@@ -1,17 +1,26 @@
 #!/usr/bin/env node
 
-const shell = require("shelljs")
+const { execSync } = require("child_process")
+const fs = require("fs")
+const path = require("path")
 
 const [, , example] = process.argv
-
-shell.cd("examples")
+const examplesDir = path.resolve(__dirname, "../examples")
 
 if (!example) {
-  const examples = shell.ls("-d", "*").map((file) => file)
+  const examples = fs
+    .readdirSync(examplesDir, "utf8")
+    .filter((folder) =>
+      fs.statSync(path.resolve(examplesDir, folder)).isDirectory()
+    )
 
   throw new Error(`$ yarn example ${examples}`)
 }
 
-shell.cd(example)
-shell.exec("yarn install")
-shell.exec("yarn dev")
+const options = {
+  cwd: path.resolve(examplesDir, example),
+  stdio: "inherit"
+}
+
+execSync("yarn install", options)
+execSync("yarn dev", options)

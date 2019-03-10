@@ -34,7 +34,6 @@
     "youch-terminal": "^1.0.0"
   },
   "devDependencies": {
-    "np": "^4.0.2",
-    "shelljs": "^0.8.3"
+    "np": "^4.0.2"
   }
 }
