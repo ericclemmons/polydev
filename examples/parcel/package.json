@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "parcel-example",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "polydev",
+    "start": "NODE_ENV=production polydev"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.0"
+  },
+  "dependencies": {
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
+  }
+}

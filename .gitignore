@@ -1,4 +1,5 @@
 .next
+*.log
 examples/**/*.lock
 dist
 node_modules

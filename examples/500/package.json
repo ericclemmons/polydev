@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "404-example",
+  "name": "500-example",
   "version": "0.0.0",
   "scripts": {
     "dev": "polydev",
