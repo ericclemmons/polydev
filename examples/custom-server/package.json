@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "custom-server-example",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "polydev",
+    "start": "NODE_ENV=production polydev"
+  },
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
