@@ -1,5 +1,12 @@
 const debug = require("debug")("polydev")
 
+// ! Jest has a built-in mocking mechanism that can't correctly resolve project
+// ! files from node_modules:
+// @see https://github.com/facebook/jest/blob/72d01cc79f3dfe05419cd8dea1b6c9a558d93879/packages/jest-resolve/src/index.ts#L277-L279
+//
+// @ts-ignore
+if (require.requireActual) require = require.requireActual
+
 module.exports = async function handle(router, file, routes) {
   await Promise.all(
     routes.map(async ([httpMethod, route]) => {
